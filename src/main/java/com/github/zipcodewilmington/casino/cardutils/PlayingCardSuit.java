@@ -1,11 +1,11 @@
 package com.github.zipcodewilmington.casino.cardutils;
 
-public enum CardSuit {
+public enum PlayingCardSuit {
     HEARTS("Hearts"), SPADES("Spades"), CLUBS("Clubs"), DIAMONDS("Diamonds");
 
     private String name;
 
-    CardSuit(String name) {
+    PlayingCardSuit(String name) {
         this.name = name;
     }
 
