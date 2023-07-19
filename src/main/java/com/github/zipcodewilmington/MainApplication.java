@@ -7,5 +7,6 @@ public class MainApplication {
         new Casino().run();
 
         //try can to do push Dima
+        //kkkk
     }
 }
