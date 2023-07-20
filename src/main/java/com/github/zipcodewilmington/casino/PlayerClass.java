@@ -67,5 +67,7 @@ public abstract class PlayerClass implements PlayerInterface {
         return playerWantToSpend;
     }
 
-
+    public void printToConsole(String prompt) {
+        playerInput.println(prompt);
+    }
 }

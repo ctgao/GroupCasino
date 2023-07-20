@@ -1,8 +1,6 @@
 package com.github.zipcodewilmington.casino;
 
-import com.github.zipcodewilmington.casino.cardutils.HandOfCards;
-import com.github.zipcodewilmington.casino.cardutils.PlayingCard;
-import com.github.zipcodewilmington.casino.cardutils.PlayingCardValue;
+import com.github.zipcodewilmington.casino.cardutils.*;
 import com.github.zipcodewilmington.utils.IOConsole;
 
 import java.util.Scanner;
@@ -31,6 +29,7 @@ public abstract class CardPlayer extends PlayerClass{
 
     public void printHand(){
         // not sure what to put here yet so i'll leave it empty for now
+        super.printToConsole(curHand.toString());
     }
 
     public void clearHand(){
@@ -42,7 +41,24 @@ public abstract class CardPlayer extends PlayerClass{
         String[] cardPieces = response.toUpperCase().split(" ");
 
         PlayingCardValue pcv = parseCardValue(cardPieces);
+        PlayingCardSuit pcs = parseCardSuit(cardPieces);
 
+        if(pcv == null || pcs == null){
+            // or some exception??? dunno yet
+            return null;
+        }
+        return new PlayingCard(pcs, pcv);
+    }
+
+    private PlayingCardSuit parseCardSuit(String[] cardPieces) {
+        for(String s : cardPieces){
+            // iterating through the stuff split into spaces
+            for(PlayingCardSuit suit : PlayingCardSuit.values()){
+                if(s.equals(suit.name())){
+                    return suit;
+                }
+            }
+        }
         return null;
     }
 
@@ -51,7 +67,7 @@ public abstract class CardPlayer extends PlayerClass{
             // iterating through the stuff split into spaces
             for(PlayingCardValue value : PlayingCardValue.values()){
                 if(s.equals(value.toString())){
-
+                    return value;
                 }
             }
         }
