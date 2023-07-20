@@ -1,27 +1,24 @@
-package com.github.zipcodewilmington.playertests;
-import com.github.zipcodewilmington.casino.CasinoAccount;
-import com.github.zipcodewilmington.casino.player.PlayerClass;
+package com.github.zipcodewilmington.casino;
+
 import org.junit.Assert;
 import org.junit.Test;
-
-
 
 public class PlayerTests {
 
     @Test
-    public void testGetWallet(){
+    public void testGetWallet() {
         //Given
         CasinoAccount wallet = new CasinoAccount("Brent", 5600);
 
         PlayerClass brent = new PlayerClass(wallet, null, null, null);
 
-        CasinoAccount expected = wallet;
+        Integer expected = wallet.getAccBalance();
 
         //When
-        CasinoAccount actual = brent.getWallet();
+        Integer actual = brent.getWallet();
 
         //Then
-        Assert.assertEquals(expected,actual);
+        Assert.assertEquals(expected, actual);
     }
 
     @Test

@@ -32,7 +32,7 @@ public abstract class CardGame implements GameInterface{
             // each round of dealing
             for(CardPlayer cp : players){
                 // for each player, give one card
-                cp.get
+                cp.receiveCard(theDeck.drawCard());
             }
         }
     }
