@@ -48,6 +48,11 @@ public enum RouletteNumParam {
     int whichColumn;
 RouletteNumParam(int rouletteNum, int oddOrEven, int blackOrRed, int highOrLow, int whichDoz, int whichColumn) {
         this.rouletteNum = rouletteNum;
+        this.oddOrEven = oddOrEven;
+        this.blackOrRed = blackOrRed;
+        this. highOrLow = highOrLow;
+        this.whichDoz = whichDoz;
+        this.whichColumn = whichColumn;
 }
 
 }
