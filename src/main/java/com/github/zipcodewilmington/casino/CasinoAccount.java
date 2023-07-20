@@ -27,5 +27,4 @@ public class CasinoAccount {
     public void updateAccBalance(int winnings) {
         this.accBalance = this.accBalance + winnings;
     }
-  
 }
