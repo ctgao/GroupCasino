@@ -2,6 +2,7 @@ package com.github.zipcodewilmington.casino;
 
 import com.github.zipcodewilmington.casino.cardutils.HandOfCards;
 import com.github.zipcodewilmington.casino.cardutils.PlayingCard;
+import com.github.zipcodewilmington.casino.cardutils.PlayingCardValue;
 import com.github.zipcodewilmington.utils.IOConsole;
 
 import java.util.Scanner;
@@ -11,8 +12,8 @@ public abstract class CardPlayer extends PlayerClass{
 
     // Constructor
     public CardPlayer(CasinoAccount wallet, IOConsole console){
-        curHand = new HandOfCards();
         super(wallet, console);
+        curHand = new HandOfCards();
     }
 
     // my other functions
@@ -37,7 +38,23 @@ public abstract class CardPlayer extends PlayerClass{
     }
 
     public PlayingCard promptForCard(String prompt){
-        // not sure what to put here yet so i'll leave it empty for now
+        String response = super.promptPlayerForChoice(prompt);
+        String[] cardPieces = response.toUpperCase().split(" ");
+
+        PlayingCardValue pcv = parseCardValue(cardPieces);
+
+        return null;
+    }
+
+    private PlayingCardValue parseCardValue(String[] cardPieces) {
+        for(String s : cardPieces){
+            // iterating through the stuff split into spaces
+            for(PlayingCardValue value : PlayingCardValue.values()){
+                if(s.equals(value.toString())){
+
+                }
+            }
+        }
         return null;
     }
 
