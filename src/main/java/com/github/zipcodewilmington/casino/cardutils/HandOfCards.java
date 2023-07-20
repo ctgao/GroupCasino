@@ -19,18 +19,12 @@ public class HandOfCards extends ArrayList<PlayingCard> {
     }
 
     // checks for a specific value
-    public boolean containsValue(PlayingCardValue targetValue){
-        return false;
+    public int howManyOfValue(PlayingCardValue targetValue){
+        return 0;
     }
 
     // checks for a specific suit
     public boolean containsSuit(PlayingCardSuit targetSuit){
         return false;
-    }
-
-    // testing to see if this string is what I want when I display this card to the user
-    @Override
-    public String toString(){
-        return this.toString();
     }
 }

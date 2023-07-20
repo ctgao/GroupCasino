@@ -5,9 +5,20 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class HandOfCardsTest {
+    /*
+     * Note: this test is unnecessary, but I wrote it in to test if I understood how extension works
+     * I also do think this works only because I implemented .equals() for PlayingCard
+     */
     @Test
     public void containsTest(){
-
+        // Given
+        HandOfCards curHand = new HandOfCards();
+        curHand.add(new PlayingCard(PlayingCardSuit.SPADES, PlayingCardValue.ACE));
+        PlayingCard pc = new PlayingCard(PlayingCardSuit.SPADES, PlayingCardValue.ACE);
+        // When
+        boolean actual = curHand.contains(pc);
+        // Then
+        assertEquals(true, actual);
     }
 
     @Test
@@ -24,9 +35,5 @@ public class HandOfCardsTest {
 
     @Test
     public void containsSuitTest() {
-    }
-
-    @Test
-    public void toStringTest() {
     }
 }
