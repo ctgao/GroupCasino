@@ -53,14 +53,14 @@ class RouletteGameTest {
 
 
         //When
-        int expectedValue = 1;
-        int actualValue = RouletteNumParam.one.rouletteNum;
+        int expectedValue1 = 1;
+        int actualValue1 = RouletteNumParam.one.rouletteNum;
 
         int expectedColumnValue = 1;
         int actualColumnValue = RouletteNumParam.one.whichColumn;
 
         //Then
-        Assert.assertTrue(rg.winBet(expectedValue, actualValue));
+        Assert.assertTrue(rg.winBet(expectedValue1, actualValue1));
         Assert.assertTrue(rg.winBet(expectedColumnValue, actualColumnValue));
 
     }

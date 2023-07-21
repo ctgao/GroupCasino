@@ -4,6 +4,7 @@ import com.github.zipcodewilmington.casino.GambleGameInterface;
 import com.github.zipcodewilmington.casino.GameInterface;
 import com.github.zipcodewilmington.casino.PlayerClass;
 import com.github.zipcodewilmington.casino.PlayerInterface;
+import com.github.zipcodewilmington.utils.IOConsole;
 
 import java.util.Scanner;
 
@@ -13,8 +14,8 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
     private double payOutMult;
     private RouletteTable table;
     private PlayerInterface roulettePlayer;
+    private RoulettePlayer player = new RoulettePlayer(roulettePlayer.getCasinoAccount(), new IOConsole());
     private int ballCurrentNum;
-    RouletteTable rt = new RouletteTable();
 
     //RoulettePlayer player = new RoulettePlayer();
     int betRouletteNum = -1;
@@ -32,13 +33,6 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
     int oddOrEvenMult = 2;
 
 
-
-
-    public boolean winBet(int bet, int betParam) {
-        return (bet == betParam);
-    }
-
-    public void endGame(){};
 
     @Override
     public void add(PlayerInterface player) {
@@ -69,8 +63,8 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
             if (input.nextInt() == 1) {
 
             } else if (input.nextInt() == 2) {
-                //2. Make an inside Bet
-                //1. oddOrEven   2. blackOrRed   3. highOrLow   4. whichDoz   5. whichColumn
+                // Make an inside Bet
+
                 System.out.printf("Which inside bet would you like? \n" +
                         "1. Odd or Even    \n" +
                         "2. Black or Red   \n" +
@@ -80,6 +74,7 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
 
                 int insideChoice = input.nextInt();
 
+                //setting up int to check against roulette number enums
                 switch (insideChoice) {
                     case 1:
                         System.out.println("Would you like to bet Odd or Even? \n" +
@@ -122,17 +117,19 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
 
             betRouletteNum = input.nextInt();
 
-
-            //how much would you like to bet
             System.out.printf("How much would you like to bet? \n");
 
-            //take bet amount
+
 
             int betAmount = input.nextInt();
 
+            if (!player.validBet(betAmount)) {
+                System.out.println("You Can't Do That");
+                break;
+            }
 
-            // ********** Add valid bet check here **********
 
+            RouletteTable rt = new RouletteTable();
             RouletteNumParam winningNum = rt.throwBall();
 
             if (betRouletteNum > -1) {
@@ -149,7 +146,7 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
             } else if (betOddOrEven > 0) {
                 if (winBet(betOddOrEven, winningNum.oddOrEven)) {
                     printWinner();
-                    payOutCalc(betAmount, numberGuessMult);
+                    payOutCalc(betAmount, oddOrEvenMult);
                 } else {
                     System.out.printf("You Lose   \n" +
                                       "Try again? \n" +
@@ -207,6 +204,11 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
         }
     }
 
+    public boolean winBet(int bet, int betParam) {
+        return (bet == betParam);
+    }
+
+
     @Override
     public void printWinner() {
         System.out.printf("You won!");
@@ -216,6 +218,7 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
     public boolean isEndCondition() {
         return true;
     }
+    public void endGame(){};
 
     @Override
     public int payOutCalc(int betAmount, int payOutMult) {
