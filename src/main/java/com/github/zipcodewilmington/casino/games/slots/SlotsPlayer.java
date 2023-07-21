@@ -16,10 +16,10 @@ public class SlotsPlayer extends PlayerClass implements GamblerInterface {
     }
 
     @Override
-    public int makeBet(int bet) {
-        if (validBet(bet)) {
-        }
-        return bet;
+    public void makeBet(int bet) {
+//        if (validBet(bet)) {
+//        }
+//        return bet;
     }
 
     @Override

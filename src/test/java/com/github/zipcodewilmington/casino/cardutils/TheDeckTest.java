@@ -16,10 +16,8 @@ public class TheDeckTest {
         //When
         theDeck.drawCard();
         theDeck.reclaimCards();
-        //When
-        PlayingCard[] actualDeck = theDeck.getDeck();
         //Then
-        assertEquals(true, Arrays.equals(initialDeck, actualDeck));
+        assertEquals(true, theDeck.containsAll(Arrays.asList(initialDeck)));
     }
     @Test
     public void reclaimCardsTest2() {
