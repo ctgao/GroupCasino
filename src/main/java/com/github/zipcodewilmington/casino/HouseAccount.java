@@ -7,7 +7,7 @@ public class HouseAccount {
 
     HouseAccount() {}
 
-    private static synchronized HouseAccount getHouseAccount()  {
+    public static synchronized HouseAccount getHouseAccount()  {
         if (houseAccount == null) {
             houseAccount = new HouseAccount();
         }
