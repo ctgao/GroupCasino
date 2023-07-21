@@ -55,7 +55,7 @@ public class NumberGuessPlayer extends PlayerClass{
     }
 
     @Override
-    public <SomeReturnType> SomeReturnType play() {
+    public <SomeReturnType> String play() {
         return null;
     }
 }
