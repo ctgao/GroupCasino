@@ -16,10 +16,6 @@ public class HouseAccount {
         return houseAccount;
     }
 
-    private HouseAccount(int accBalance) {
-        this.accBalance = accBalance;
-    }
-
     public int getBalance() {
         return this.accBalance;}
 
