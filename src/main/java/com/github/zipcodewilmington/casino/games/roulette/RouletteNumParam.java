@@ -5,9 +5,9 @@ import java.util.Map;
 
 public enum RouletteNumParam {
     //blackOrRed really means GREEN, blackOrRed
-    // 3 = Green
-    zero(0, 0, 3, 0, 0, 0),
-    one(1, 1, 2, 2, 1, 1),
+    // 100 = Green
+    zero(0, 100, 100, 100, 100, 100),
+    one(1, 1, 2, 1, 1, 1),
     two(2, 2, 1, 1, 1, 2),
     three(3, 1, 2, 1, 1, 3),
     four(4, 2, 1, 1, 1, 1),
