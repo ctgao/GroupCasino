@@ -2,6 +2,7 @@ package com.github.zipcodewilmington.casino.games.roulette;
 
 import com.github.zipcodewilmington.casino.GambleGameInterface;
 import com.github.zipcodewilmington.casino.GameInterface;
+import com.github.zipcodewilmington.casino.PlayerClass;
 import com.github.zipcodewilmington.casino.PlayerInterface;
 
 import java.util.Scanner;
@@ -14,6 +15,8 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
     private PlayerInterface roulettePlayer;
     private int ballCurrentNum;
     RouletteTable rt = new RouletteTable();
+
+    //RoulettePlayer player = new RoulettePlayer();
     int betRouletteNum = -1;
     int insideBetSelection = 0;
     //1. oddOrEven   2. blackOrRed   3. highOrLow   4. whichDoz   5. whichColumn
@@ -126,6 +129,7 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
             //take bet amount
 
             int betAmount = input.nextInt();
+
 
             // ********** Add valid bet check here **********
 
