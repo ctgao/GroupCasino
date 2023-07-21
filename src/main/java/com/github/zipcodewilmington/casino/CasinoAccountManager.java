@@ -26,10 +26,12 @@ public class CasinoAccountManager {
      * @return new instance of `ArcadeAccount` with specified `accountName` and `accountPassword`
      */
     public CasinoAccount createAccount(String accountName, String accountPassword) {
-        String currentMethodName = new Object(){}.getClass().getEnclosingMethod().getName();
-        String currentClassName = getClass().getName();
-        String errorMessage = "Method with name [ %s ], defined in class with name [ %s ] has  not yet been implemented";
-        throw new RuntimeException(String.format(errorMessage, currentMethodName, currentClassName));
+//        String currentMethodName = new Object(){}.getClass().getEnclosingMethod().getName();
+//        String currentClassName = getClass().getName();
+//        String errorMessage = "Method with name [ %s ], defined in class with name [ %s ] has  not yet been implemented";
+//        throw new RuntimeException(String.format(errorMessage, currentMethodName, currentClassName));
+//        return new CasinoAccount(accountName, accountPassword);
+        return null;
     }
 
     /**
