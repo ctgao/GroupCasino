@@ -13,13 +13,11 @@ public class RoulettePlayer extends PlayerClass implements GamblerInterface{
     public void makeBet(int bet) {
     }
 
-    public int betParam(int choice) {
-        return choice;
-    }
 
     @Override
     public boolean validBet(int bet) {
-        return false;
+        //return (PlayerClass.getAccBalance > bet) ;
+        return true;
     }
 
     @Override
@@ -28,7 +26,7 @@ public class RoulettePlayer extends PlayerClass implements GamblerInterface{
     }
 
     @Override
-    public <SomeReturnType> SomeReturnType play() {
+    public <SomeReturnType> String play() {
         return null;
     }
 }

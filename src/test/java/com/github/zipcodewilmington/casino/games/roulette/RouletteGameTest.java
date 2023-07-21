@@ -51,14 +51,14 @@ class RouletteGameTest {
         //Given
         RouletteTable rt = new RouletteTable();
 
-        int betRouletteNum = 1;
-
 
         //When
+        int expectedValue = 1;
+        int actualValue = RouletteNumParam.one.rouletteNum;
 
 
         //Then
-
+        Assert.assertEquals(expectedValue, actualValue);
 
 
     }

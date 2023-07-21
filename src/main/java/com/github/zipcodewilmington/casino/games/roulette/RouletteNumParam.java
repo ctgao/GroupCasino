@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum RouletteNumParam {
+    //blackOrRed really means GREEN, blackOrRed
+    // 3 = Green
+    zero(0, 0, 3, 0, 0, 0),
     one(1, 1, 2, 2, 1, 1),
     two(2, 2, 1, 1, 1, 2),
     three(3, 1, 2, 1, 1, 3),
