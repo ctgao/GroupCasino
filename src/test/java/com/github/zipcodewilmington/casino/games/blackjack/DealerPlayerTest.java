@@ -67,7 +67,7 @@ class DealerPlayerTest {
     @Test
     void toStringTest() {
         //Given
-        String expected = "[HIDDEN, 6 of Diamonds]";
+        String expected = "\nDealer Hand: [HIDDEN, 6 of Diamonds]";
         BlackJackPlayer dealer = new DealerPlayer(null);
         dealer.receiveCard(new PlayingCard(PlayingCardSuit.DIAMONDS, PlayingCardValue.ACE));
         dealer.receiveCard(new PlayingCard(PlayingCardSuit.DIAMONDS, PlayingCardValue.SIX));
