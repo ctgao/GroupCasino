@@ -26,10 +26,6 @@ public class BlackJackPlayer extends CardPlayer implements GamblerInterface {
         return stayOrNot;
     }
 
-    public void setStayOrNot(boolean stayOrNot) {
-        this.stayOrNot = stayOrNot;
-    }
-
     @Override
     public void sortHand() {
         // this does nothing because there's nothing to sort
@@ -37,8 +33,6 @@ public class BlackJackPlayer extends CardPlayer implements GamblerInterface {
 
     @Override
     public <SomeReturnType> String play() {
-        // show the hand first
-        printHand();
         // now ask for input
         String choice = promptPlayerForChoice("Would you like to get HIT or STAY?");
         if(choice.toUpperCase().equals("HIT") || choice.toUpperCase().equals("STAY")) {
@@ -48,9 +42,10 @@ public class BlackJackPlayer extends CardPlayer implements GamblerInterface {
     }
 
     @Override
-    public void makeBet(int bet) {
+    public int makeBet(int bet) {
         // when we make a bet, we update our account with neg money
         this.getCasinoAccount().updateAccBalance(-1 * bet);
+        return bet;
     }
 
     @Override
@@ -116,5 +111,9 @@ public class BlackJackPlayer extends CardPlayer implements GamblerInterface {
     private boolean isFaceCard(PlayingCard pc){
         PlayingCardValue val = pc.getValue();
         return (val.equals(PlayingCardValue.JACK) || val.equals(PlayingCardValue.QUEEN) || val.equals(PlayingCardValue.KING));
+    }
+
+    public String getBustedStatement() {
+        return "YOU BUSTED! RIP";
     }
 }

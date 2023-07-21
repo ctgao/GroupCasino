@@ -14,6 +14,7 @@ public class TheDeck extends Stack<PlayingCard>{
                 this.push(new PlayingCard(suit, value));
             }
         }
+        shuffle();
     }
 
     public void reclaimCards(){
