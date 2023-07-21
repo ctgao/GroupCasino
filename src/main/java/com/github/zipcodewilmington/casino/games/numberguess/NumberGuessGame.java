@@ -2,7 +2,8 @@ package com.github.zipcodewilmington.casino.games.numberguess;
 
 import com.github.zipcodewilmington.casino.GameInterface;
 import com.github.zipcodewilmington.casino.PlayerInterface;
-
+import java.lang.Math;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -19,13 +20,15 @@ public class NumberGuessGame implements GameInterface{
     private int guessesRemaining = 5;
 
     Scanner input = new Scanner(System.in);
+    static Random rand = new Random();
+
 
     public int randomNum() {
-        int targetNumber = 1 + (int) (100 * Math.random());
+        targetNumber = (int) Math.floor((Math.random() * (100 - 1 + 1) + 1));
         return targetNumber;
     }
 
-    public void makeGuess(int guess) {
+    public void makeGuess() {
         System.out.println("Enter your guess: ");
         guess = input.nextInt();
 
@@ -33,7 +36,6 @@ public class NumberGuessGame implements GameInterface{
 
     public boolean validateGuess() {
         if (guess == targetNumber) {
-            printWinner();
             return true;
         } else if (guess > targetNumber) {
             System.out.println("Your guess is too high :(");
@@ -45,11 +47,7 @@ public class NumberGuessGame implements GameInterface{
     }
 
     public void getRemainingGuesses() {
-        do {
             System.out.println("You have " + guessesRemaining + " guesses remaining");
-            guessesRemaining--;
-        } while (guessesRemaining > 0);
-
     }
 
     @Override
@@ -67,15 +65,18 @@ public class NumberGuessGame implements GameInterface{
         randomNum();
         System.out.println("I'm thinking of a number between 1 and 100.\nYou have 5 tries to guess the number.\nGood luck :)");
         do {
-            makeGuess(this.guess);
             getRemainingGuesses();
-            validateGuess();
+            makeGuess();
+            if (validateGuess()) {
+                printWinner();
+                break;
+            } else {
+                guessesRemaining--;
+            }
         } while (!isEndCondition());
-        isEndCondition();
 
+        }
 
-
-    }
 
     @Override
     public void printWinner() {
@@ -87,7 +88,8 @@ public class NumberGuessGame implements GameInterface{
     public boolean isEndCondition() {
         if (guessesRemaining == 0) {
             System.out.println("You ran out of tries :(\nYou lose!");
+            return true;
         }
-        return true;
+        return false;
     }
 }
