@@ -2,7 +2,7 @@ package com.github.zipcodewilmington.casino;
 
 public interface GamblerInterface {
 
-    void makeBet(int bet);
+    int makeBet(int bet);
 
     boolean validBet(int bet);
 

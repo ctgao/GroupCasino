@@ -10,7 +10,8 @@ public class RoulettePlayer extends PlayerClass implements GamblerInterface{
 
 
     @Override
-    public void makeBet(int bet) {
+    public int makeBet(int bet) {
+        return bet;
     }
 
 
