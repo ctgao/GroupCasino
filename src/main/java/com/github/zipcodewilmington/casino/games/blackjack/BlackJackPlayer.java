@@ -45,7 +45,6 @@ public class BlackJackPlayer extends CardPlayer implements GamblerInterface {
     public void makeBet(int bet) {
         // when we make a bet, we update our account with neg money
         this.getCasinoAccount().updateAccBalance(-1 * bet);
-        return bet;
     }
 
     @Override
