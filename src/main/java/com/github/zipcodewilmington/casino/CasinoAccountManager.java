@@ -45,9 +45,7 @@ public class CasinoAccountManager {
 //        String currentClassName = getClass().getName();
 //        String errorMessage = "Method with name [ %s ], defined in class with name [ %s ] has  not yet been implemented";
 //        throw new RuntimeException(String.format(errorMessage, currentMethodName, currentClassName));
-        CasinoAccount ca = new CasinoAccount(accountName, accountPassword, 1_000);
-        listOfAccounts.put(accountName, ca);
-        return ca;
+        return new CasinoAccount(accountName, accountPassword, 1_000);
     }
 
     /**

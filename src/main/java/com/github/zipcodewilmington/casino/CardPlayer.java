@@ -33,7 +33,7 @@ public abstract class CardPlayer extends PlayerClass{
 
     public void printHand(){
         // not sure what to put here yet so i'll leave it empty for now
-        super.printToConsole(curHand.toString());
+        super.printToConsole(String.format("Your Hand: %s\n", curHand.toString()));
     }
 
     public void clearHand(){

@@ -1,5 +1,7 @@
 package com.github.zipcodewilmington.casino.games.blackjack;
 
+import com.github.zipcodewilmington.casino.CasinoAccount;
+import com.github.zipcodewilmington.casino.HouseAccount;
 import com.github.zipcodewilmington.casino.cardutils.HandOfCards;
 import com.github.zipcodewilmington.casino.cardutils.PlayingCard;
 import com.github.zipcodewilmington.casino.cardutils.PlayingCardSuit;
@@ -11,19 +13,58 @@ import static org.junit.jupiter.api.Assertions.*;
 class BlackJackPlayerTest {
 
     @Test
-    void isStayOrNot() {
+    void isStayOrNotTest() {
+        //Given
+        BlackJackPlayer player = new BlackJackPlayer(null);
+        //When
+        boolean actual = player.isStayOrNot();
+        //Then
+        assertEquals(false, actual);
     }
-
     @Test
-    void play() {
+    void stayTest() {
+        //Given
+        BlackJackPlayer player = new BlackJackPlayer(null);
+        //When
+        player.stay();
+        //When
+        boolean actual = player.isStayOrNot();
+        //Then
+        assertEquals(true, actual);
     }
 
     @Test
     void makeBet() {
+        // Given
+        int expected = 100;
+        CasinoAccount account = new CasinoAccount(null, null, expected);
+        BlackJackPlayer player = new BlackJackPlayer(account, null);
+        // When
+        player.makeBet(10);
+        int actualWallet = player.getWallet();
+        // Then
+        assertEquals(expected - 10, actualWallet);
     }
 
     @Test
-    void validBet() {
+    void validBetTest() {
+        // Given
+        CasinoAccount account = new CasinoAccount(null, null, 0);
+        BlackJackPlayer player = new BlackJackPlayer(account, null);
+        // When
+        boolean actual = player.validBet(100);
+        // Then
+        assertEquals(false, actual);
+    }
+    @Test
+    void validBetTest1() {
+        // Given
+        CasinoAccount account = new CasinoAccount(null, null, 100);
+        BlackJackPlayer player = new BlackJackPlayer(account, null);
+        // When
+        boolean actual = player.validBet(100);
+        // Then
+        assertEquals(true, actual);
     }
 
     @Test
@@ -31,11 +72,27 @@ class BlackJackPlayerTest {
     }
 
     @Test
-    void hitMe() {
+    void hitMeTest() {
+        //Given
+        BlackJackPlayer player = new BlackJackPlayer(new HandOfCards());
+        //When
+        player.hitMe(new PlayingCard(PlayingCardSuit.SPADES, PlayingCardValue.FIVE));
+        //When
+        HandOfCards hand = player.getHandOfCards();
+        //Then
+        assertEquals(1, hand.size());
     }
-
     @Test
-    void stay() {
+    void hitMeTest1() {
+        //Given
+        BlackJackPlayer player = new BlackJackPlayer(new HandOfCards());
+        player.receiveCard(new PlayingCard(PlayingCardSuit.HEARTS, PlayingCardValue.KING));
+        //When
+        player.hitMe(new PlayingCard(PlayingCardSuit.SPADES, PlayingCardValue.FIVE));
+        //When
+        HandOfCards hand = player.getHandOfCards();
+        //Then
+        assertEquals(2, hand.size());
     }
 
     @Test

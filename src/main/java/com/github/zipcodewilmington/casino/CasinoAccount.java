@@ -32,8 +32,4 @@ public class CasinoAccount {
     public String getAccPassword() {
         return accPassword;
     }
-
-    public void setAccPassword(String accPassword) {
-        this.accPassword = accPassword;
-    }
 }
