@@ -1,7 +1,7 @@
-package com.github.zipcodewilmington.casino;
+package com.github.zipcodewilmington.casino.games.roulette;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.github.zipcodewilmington.casino.games.roulette.RouletteNumParam;
+
 import java.util.Random;
 
 public class RouletteTable {

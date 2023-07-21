@@ -1,4 +1,4 @@
-package com.github.zipcodewilmington.casino;
+package com.github.zipcodewilmington.casino.games.roulette;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class RouletteGameTest {
 
     @Test
-    void winBet() {
+    void winBetTest() {
         //Given
         RouletteNumParam one = RouletteNumParam.one;
         String expectedBetType = "highOrLow";
@@ -24,12 +24,11 @@ class RouletteGameTest {
         }
 
         //Then
-
         Assert.assertEquals(expectedValue, actualValue);
     }
 
     @Test
-    void winBet2() {
+    void winBetTest2() {
         //Given
         int playerBet = 3;
 
@@ -44,6 +43,23 @@ class RouletteGameTest {
 
         Assert.assertEquals(expectedBet, actualBet);
         Assert.assertEquals(expectedBetParam, actualBetParam);
+
+    }
+
+    @Test
+    void runTest() {
+        //Given
+        RouletteTable rt = new RouletteTable();
+
+        int betRouletteNum = 1;
+
+
+        //When
+
+
+        //Then
+
+
 
     }
 }
