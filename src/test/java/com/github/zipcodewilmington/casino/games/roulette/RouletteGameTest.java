@@ -50,6 +50,7 @@ class RouletteGameTest {
     void runTest() {
         //Given
         RouletteTable rt = new RouletteTable();
+        RouletteGame rg = new RouletteGame();
 
 
         //When
@@ -59,6 +60,7 @@ class RouletteGameTest {
 
         //Then
         Assert.assertEquals(expectedValue, actualValue);
+        Assert.assertTrue(rg.winBet(expectedValue, actualValue));
 
 
     }
