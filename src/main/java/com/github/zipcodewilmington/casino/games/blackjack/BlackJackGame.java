@@ -24,12 +24,15 @@ public class BlackJackGame extends CardGame implements GambleGameInterface {
         // deal 2 cards per player
         dealCards(2);
 
+        // make bets here
+        logPlayerBets();
+
         // for each player, ask them how they wanna play
         for(CardPlayer cp : super.getPlayers()){
             BlackJackPlayer temp = (BlackJackPlayer) cp;
             if(!(temp instanceof DealerPlayer)) {
                 // play as long as you aren't the dealer
-                temp.play();
+                playerTurn(temp);
             }
         }
 
@@ -38,6 +41,38 @@ public class BlackJackGame extends CardGame implements GambleGameInterface {
 
         // now we can calculate each player's scores
         decideWhoWinsAndPayThem();
+
+        // now do some clean up
+        betAmounts.clear();
+    }
+
+    public void playerTurn(BlackJackPlayer player) {
+        do{
+            // while they wanna stay, play
+            String playerChoice = player.play();
+            if(playerChoice.equals("HIT")){
+                player.hitMe(this.getTheDeck().drawCard());
+                if(player.isHandBusted()){
+                    player.printToConsole("YOU BUSTED! RIP");
+                    player.stay();
+                }
+            }
+            else{
+                player.stay();
+            }
+        } while(!player.isStayOrNot());
+    }
+
+    void logPlayerBets() {
+        for(CardPlayer cp : super.getPlayers()) {
+            BlackJackPlayer temp = (BlackJackPlayer) cp;
+            int betValue;
+            do {
+                betValue = temp.promptPlayerFoMoney("How much do you wanna bet?");
+            }while(temp.validBet(betValue));
+            betAmounts.put(temp, betValue);
+            temp.makeBet(betValue);
+        }
     }
 
     /*
@@ -47,24 +82,26 @@ public class BlackJackGame extends CardGame implements GambleGameInterface {
      */
     private void decideWhoWinsAndPayThem() {
         // find the dealer's score
-        int dealerScore = calculateScore(dealer.getHandOfCards());
+        boolean busted = dealer.isHandBusted();
+        int dealerScore = dealer.calculateScore();
 
         for(CardPlayer cp : super.getPlayers()) {
             BlackJackPlayer temp = (BlackJackPlayer) cp;
-            // get the player's score
-            int playerScore = calculateScore(temp.getHandOfCards());
             // now calculate funds
-            int payout = beatDealer(dealerScore, playerScore) ? betAmounts.get(temp) : 0;
+            int payout = beatDealer(busted, dealerScore, temp) ? betAmounts.get(temp) : 0;
             temp.depositPayOut(payout);
         }
     }
 
-    public boolean beatDealer(int dealerScore, int playerScore){
-        if(busted(playerScore)){
+    public boolean beatDealer(boolean dealerBusted, int dealerScore, BlackJackPlayer player){
+        // get the player's score
+        int playerScore = player.calculateScore();
+
+        if(player.isHandBusted()){
             return false;
         }
         else{
-            if(busted(dealerScore)){
+            if(dealerBusted){
                 return true;
             }
             else if (dealerScore > playerScore) {
@@ -78,11 +115,11 @@ public class BlackJackGame extends CardGame implements GambleGameInterface {
 
     @Override
     public void printWinner() {
-        int dealerScore = calculateScore(dealer.getHandOfCards());
+        int dealerScore = dealer.calculateScore();
         // iterate over the players and see whose score is above the dealer
         for(CardPlayer cp : getPlayers()){
             BlackJackPlayer player = (BlackJackPlayer) cp;
-            int playerScore = calculateScore(player.getHandOfCards());
+            int playerScore = player.calculateScore();
             if(playerScore > dealerScore){
                 // then they can get printed out? idk yet
             }
@@ -95,49 +132,6 @@ public class BlackJackGame extends CardGame implements GambleGameInterface {
         // the game of blackjack ends when the dealer has taken their turn
         // not sure if we'll ever use this since run will never use this
         return false;
-    }
-
-    public int calculateScore(HandOfCards hand){
-        int result = 0;
-        int aceCount = 0;
-
-        // go through each of the cards in the hand
-        for(PlayingCard pc : hand){
-            if(isFaceCard(pc)){
-                // face cards are worth 10
-                result += 10;
-            }
-            else if(!pc.getValue().equals(PlayingCardValue.ACE)){
-                // not an ace
-                result += pc.getValue().getNumericalVal();
-            }
-            else{
-                aceCount++;
-            }
-        }
-
-        // now deals with aces
-        for(int i = 0; i < aceCount; i++){
-            if(busted(result + 11)){
-                // busted if you add 11 means you add 1
-                result += 1;
-            }
-            else{
-                result += 11;
-            }
-        }
-        return result;
-    }
-
-    // busted means you have more than 21 as your hand value
-    private boolean busted(int i) {
-        return (i > 21);
-    }
-
-    // face cards are J, Q, K
-    private boolean isFaceCard(PlayingCard pc){
-        PlayingCardValue val = pc.getValue();
-        return (val.equals(PlayingCardValue.JACK) || val.equals(PlayingCardValue.QUEEN) || val.equals(PlayingCardValue.KING));
     }
 
     public int payOutCalc(int betAmount) {

@@ -13,6 +13,10 @@ public abstract class CardPlayer extends PlayerClass{
         super(wallet, console);
         curHand = new HandOfCards();
     }
+    public CardPlayer(HandOfCards hand){
+        super(null, null);
+        curHand = hand;
+    }
 
     // my other functions
     public HandOfCards getHandOfCards(){

@@ -17,8 +17,14 @@ public class DealerPlayer extends BlackJackPlayer {
     }
 
     @Override
-    public <SomeReturnType> SomeReturnType play() {
-        return null;
+    public <SomeReturnType> String play() {
+        // make the decision
+        if(calculateScore() < 17){
+            return "HIT";
+        }
+        else{
+            return "STAY";
+        }
     }
 
     @Override

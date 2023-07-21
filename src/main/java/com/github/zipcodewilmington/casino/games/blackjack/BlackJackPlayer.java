@@ -3,7 +3,9 @@ package com.github.zipcodewilmington.casino.games.blackjack;
 import com.github.zipcodewilmington.casino.CardPlayer;
 import com.github.zipcodewilmington.casino.CasinoAccount;
 import com.github.zipcodewilmington.casino.GamblerInterface;
-import com.github.zipcodewilmington.casino.cardutils.TheDeck;
+import com.github.zipcodewilmington.casino.cardutils.HandOfCards;
+import com.github.zipcodewilmington.casino.cardutils.PlayingCard;
+import com.github.zipcodewilmington.casino.cardutils.PlayingCardValue;
 import com.github.zipcodewilmington.utils.IOConsole;
 
 public class BlackJackPlayer extends CardPlayer implements GamblerInterface {
@@ -11,6 +13,11 @@ public class BlackJackPlayer extends CardPlayer implements GamblerInterface {
 
     public BlackJackPlayer(CasinoAccount wallet, IOConsole console) {
         super(wallet, console);
+        stayOrNot = false;
+    }
+
+    public BlackJackPlayer(HandOfCards hand) {
+        super(hand);
         stayOrNot = false;
     }
 
@@ -29,29 +36,85 @@ public class BlackJackPlayer extends CardPlayer implements GamblerInterface {
     }
 
     @Override
-    public <SomeReturnType> SomeReturnType play() {
-        return null;
+    public <SomeReturnType> String play() {
+        // show the hand first
+        printHand();
+        // now ask for input
+        String choice = promptPlayerForChoice("Would you like to get HIT or STAY?");
+        if(choice.toUpperCase().equals("HIT") || choice.toUpperCase().equals("STAY")) {
+            return choice.toUpperCase();
+        }
+        throw new RuntimeException("Not a VALID BlackJack option. SHAME!");
     }
 
     @Override
     public void makeBet(int bet) {
-
+        // when we make a bet, we update our account with neg money
+        this.getCasinoAccount().updateAccBalance(-1 * bet);
     }
 
     @Override
     public boolean validBet(int bet) {
-        return false;
+        return this.getWallet() >= bet;
     }
 
     @Override
     public void depositPayOut(int winnings) {
-
+        this.getCasinoAccount().updateAccBalance(winnings);
     }
 
-    public void hitMe(TheDeck deck){
+    public void hitMe(PlayingCard pc){
+        this.receiveCard(pc);
     }
 
     public void stay(){
         stayOrNot = true;
+    }
+
+    public int calculateScore(){
+        int result = 0;
+        int aceCount = 0;
+
+        // go through each of the cards in the hand
+        for(PlayingCard pc : getHandOfCards()){
+            if(isFaceCard(pc)){
+                // face cards are worth 10
+                result += 10;
+            }
+            else if(!pc.getValue().equals(PlayingCardValue.ACE)){
+                // not an ace
+                result += pc.getValue().getNumericalVal();
+            }
+            else{
+                aceCount++;
+            }
+        }
+
+        // now deals with aces
+        for(int i = 0; i < aceCount; i++){
+            if(busted(result + 11)){
+                // busted if you add 11 means you add 1
+                result += 1;
+            }
+            else{
+                result += 11;
+            }
+        }
+        return result;
+    }
+
+    // busted means you have more than 21 as your hand value
+    private boolean busted(int i) {
+        return (i > 21);
+    }
+
+    public boolean isHandBusted() {
+        return busted(calculateScore());
+    }
+
+    // face cards are J, Q, K
+    private boolean isFaceCard(PlayingCard pc){
+        PlayingCardValue val = pc.getValue();
+        return (val.equals(PlayingCardValue.JACK) || val.equals(PlayingCardValue.QUEEN) || val.equals(PlayingCardValue.KING));
     }
 }
