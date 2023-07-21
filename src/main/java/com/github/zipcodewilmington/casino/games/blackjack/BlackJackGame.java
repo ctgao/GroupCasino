@@ -3,9 +3,8 @@ package com.github.zipcodewilmington.casino.games.blackjack;
 import com.github.zipcodewilmington.casino.CardGame;
 import com.github.zipcodewilmington.casino.CardPlayer;
 import com.github.zipcodewilmington.casino.GambleGameInterface;
-import com.github.zipcodewilmington.casino.cardutils.HandOfCards;
-import com.github.zipcodewilmington.casino.cardutils.PlayingCard;
-import com.github.zipcodewilmington.casino.cardutils.PlayingCardValue;
+import com.github.zipcodewilmington.casino.HouseAccount;
+import com.github.zipcodewilmington.utils.IOConsole;
 
 import java.util.HashMap;
 
@@ -13,9 +12,9 @@ public class BlackJackGame extends CardGame implements GambleGameInterface {
     DealerPlayer dealer;
     HashMap<BlackJackPlayer, Integer> betAmounts;
 
-    public BlackJackGame(){
+    public BlackJackGame(IOConsole console){
         super();
-        dealer = new DealerPlayer();
+        dealer = new DealerPlayer(console);
         add(dealer);
     }
 
@@ -37,13 +36,25 @@ public class BlackJackGame extends CardGame implements GambleGameInterface {
         }
 
         // now the dealer takes their turn
-        dealer.play();
+        dealer.setShowFirstCard(true);
+        playerTurn(dealer);
 
         // now we can calculate each player's scores
         decideWhoWinsAndPayThem();
 
         // now do some clean up
+        cleanUp();
+    }
+
+    private void cleanUp() {
+        // reset all bets
         betAmounts.clear();
+        // clear your hand of cards
+        for(CardPlayer cp : super.getPlayers()){
+            cp.clearHand();
+        }
+        // reset the deck
+        getTheDeck().reclaimCards();
     }
 
     public void playerTurn(BlackJackPlayer player) {
@@ -69,17 +80,13 @@ public class BlackJackGame extends CardGame implements GambleGameInterface {
             int betValue;
             do {
                 betValue = temp.promptPlayerFoMoney("How much do you wanna bet?");
-            }while(temp.validBet(betValue));
+            } while(temp.validBet(betValue));
             betAmounts.put(temp, betValue);
             temp.makeBet(betValue);
+            HouseAccount.getHouseAccount().acceptMoney(betValue);
         }
     }
 
-    /*
-     * player busted = earn nothing gg
-     * dealer busted but player didn't bust = good job bruh
-     * dealer not busted but greater than player not busted = dealer win
-     */
     private void decideWhoWinsAndPayThem() {
         // find the dealer's score
         boolean busted = dealer.isHandBusted();
@@ -88,11 +95,19 @@ public class BlackJackGame extends CardGame implements GambleGameInterface {
         for(CardPlayer cp : super.getPlayers()) {
             BlackJackPlayer temp = (BlackJackPlayer) cp;
             // now calculate funds
-            int payout = beatDealer(busted, dealerScore, temp) ? betAmounts.get(temp) : 0;
+            int betAmount = beatDealer(busted, dealerScore, temp) ? betAmounts.get(temp) : 0;
+            int payout = payOutCalc(betAmount);
             temp.depositPayOut(payout);
+            // also remove funds from the house account
+            HouseAccount.getHouseAccount().payout(payout);
         }
     }
 
+    /*
+     * player busted = earn nothing gg
+     * dealer busted but player didn't bust = good job bruh
+     * dealer not busted but greater than player not busted = dealer win
+     */
     public boolean beatDealer(boolean dealerBusted, int dealerScore, BlackJackPlayer player){
         // get the player's score
         int playerScore = player.calculateScore();
@@ -115,16 +130,7 @@ public class BlackJackGame extends CardGame implements GambleGameInterface {
 
     @Override
     public void printWinner() {
-        int dealerScore = dealer.calculateScore();
-        // iterate over the players and see whose score is above the dealer
-        for(CardPlayer cp : getPlayers()){
-            BlackJackPlayer player = (BlackJackPlayer) cp;
-            int playerScore = player.calculateScore();
-            if(playerScore > dealerScore){
-                // then they can get printed out? idk yet
-            }
-        }
-
+        // do you even need this??? - not sure yet
     }
 
     @Override

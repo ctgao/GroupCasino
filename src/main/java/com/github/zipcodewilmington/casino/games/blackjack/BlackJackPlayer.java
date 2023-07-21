@@ -26,10 +26,6 @@ public class BlackJackPlayer extends CardPlayer implements GamblerInterface {
         return stayOrNot;
     }
 
-    public void setStayOrNot(boolean stayOrNot) {
-        this.stayOrNot = stayOrNot;
-    }
-
     @Override
     public void sortHand() {
         // this does nothing because there's nothing to sort

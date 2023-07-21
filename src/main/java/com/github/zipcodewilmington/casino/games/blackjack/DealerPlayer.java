@@ -1,10 +1,12 @@
 package com.github.zipcodewilmington.casino.games.blackjack;
 
+import com.github.zipcodewilmington.utils.IOConsole;
+
 public class DealerPlayer extends BlackJackPlayer {
     private boolean showFirstCard;
 
-    public DealerPlayer() {
-        super(null, null);
+    public DealerPlayer(IOConsole console) {
+        super(null, console);
         showFirstCard = false;
     }
 
@@ -29,7 +31,14 @@ public class DealerPlayer extends BlackJackPlayer {
 
     @Override
     public void printHand(){
-        // HIDE THAT FIRST CARD!
+        String result = this.getHandOfCards().toString();
+        if(!showFirstCard) {
+            // hide that first card
+            String firstCard = this.getHandOfCards().get(0).toString();
+            result.replace(firstCard, "HIDDEN");
+        }
+
+        super.printToConsole(result);
     }
 
 }
