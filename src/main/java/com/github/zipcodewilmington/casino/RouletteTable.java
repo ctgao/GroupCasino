@@ -7,6 +7,18 @@ import java.util.Random;
 public class RouletteTable {
 
     private Random ball = new Random();
-    HashMap<Integer, String> numAssociation;
+    RouletteNumParam ans;
+
+    public RouletteNumParam throwBall() {
+        int ballNum = ball.nextInt(36) +1;
+
+        for (RouletteNumParam num :  RouletteNumParam.values()) {
+            if (num.rouletteNum == ballNum) {
+                ans = num;
+            }
+        }
+       return ans;
+    }
+
 
 }

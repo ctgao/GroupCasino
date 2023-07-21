@@ -50,7 +50,7 @@ RouletteNumParam(int rouletteNum, int oddOrEven, int blackOrRed, int highOrLow, 
         this.rouletteNum = rouletteNum;
         this.oddOrEven = oddOrEven;
         this.blackOrRed = blackOrRed;
-        this. highOrLow = highOrLow;
+        this.highOrLow = highOrLow;
         this.whichDoz = whichDoz;
         this.whichColumn = whichColumn;
 }
