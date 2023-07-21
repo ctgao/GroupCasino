@@ -1,9 +1,12 @@
-package com.github.zipcodewilmington.casino;
+package com.github.zipcodewilmington.casino.games.roulette;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public enum RouletteNumParam {
+    //blackOrRed really means GREEN, blackOrRed
+    // 3 = Green
+    zero(0, 0, 3, 0, 0, 0),
     one(1, 1, 2, 2, 1, 1),
     two(2, 2, 1, 1, 1, 2),
     three(3, 1, 2, 1, 1, 3),
@@ -40,19 +43,20 @@ public enum RouletteNumParam {
     thirty_four(34, 2, 2, 2, 3, 1),
     thirty_five(35, 1, 1, 2, 3, 2),
     thirty_six(36, 2, 2, 2, 3, 3);
-    int rouletteNum;
-    int oddOrEven;
-    int blackOrRed;
-    int highOrLow;
-    int whichDoz;
-    int whichColumn;
+    public int rouletteNum;
+    public int oddOrEven;
+    public int blackOrRed;
+    public int highOrLow;
+    public int whichDoz;
+    public int whichColumn;
 RouletteNumParam(int rouletteNum, int oddOrEven, int blackOrRed, int highOrLow, int whichDoz, int whichColumn) {
         this.rouletteNum = rouletteNum;
         this.oddOrEven = oddOrEven;
         this.blackOrRed = blackOrRed;
-        this. highOrLow = highOrLow;
+        this.highOrLow = highOrLow;
         this.whichDoz = whichDoz;
         this.whichColumn = whichColumn;
+
 }
 
 }
