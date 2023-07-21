@@ -17,6 +17,14 @@ public abstract class CardGame implements GameInterface{
         playerScores = new HashMap<>();
     }
 
+    public TheDeck getTheDeck() {
+        return theDeck;
+    }
+
+    public ArrayList<CardPlayer> getPlayers() {
+        return players;
+    }
+
     @Override
     public void add(PlayerInterface player) {
         players.add((CardPlayer) player);

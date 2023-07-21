@@ -31,8 +31,8 @@ public abstract class PlayerClass implements PlayerInterface {
         this.wallet = wallet;
     }
 
-    public Integer getCasinoAccount() {
-        return wallet.getAccBalance();
+    public CasinoAccount getCasinoAccount() {
+        return wallet;
     }
 
 
