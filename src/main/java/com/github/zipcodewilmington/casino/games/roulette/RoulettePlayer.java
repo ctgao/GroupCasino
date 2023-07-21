@@ -14,18 +14,18 @@ public class RoulettePlayer extends PlayerClass implements GamblerInterface {
 
     @Override
     public void makeBet(int bet) {
+        this.getCasinoAccount().updateAccBalance(bet * -1);
     }
 
 
     @Override
     public boolean validBet(int bet) {
-        //return (PlayerClass.getAccBalance > bet) ;
-        return true;
+        return (bet <= this.getWallet());
     }
 
     @Override
     public void depositPayOut(int winnings) {
-
+        this.getCasinoAccount().updateAccBalance(winnings);
     }
 
     @Override
