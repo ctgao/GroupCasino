@@ -1,8 +1,11 @@
-package com.github.zipcodewilmington.casino;
+package com.github.zipcodewilmington.casino.games.roulette;
 
+import com.github.zipcodewilmington.casino.CasinoAccount;
+import com.github.zipcodewilmington.casino.GamblerInterface;
+import com.github.zipcodewilmington.casino.PlayerClass;
 import com.github.zipcodewilmington.utils.IOConsole;
 
-public class RoulettePlayer extends PlayerClass implements GamblerInterface{
+public class RoulettePlayer extends PlayerClass implements GamblerInterface {
     public RoulettePlayer(CasinoAccount wallet, Integer totalGamesWon, Integer totalGamesPlayed, IOConsole playerInput) {
         super(wallet, totalGamesWon, totalGamesPlayed, playerInput);
     }
