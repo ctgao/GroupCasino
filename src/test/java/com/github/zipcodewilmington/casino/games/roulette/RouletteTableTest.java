@@ -1,11 +1,10 @@
-package com.github.zipcodewilmington.casino;
+package com.github.zipcodewilmington.casino.games.roulette;
 
+import com.github.zipcodewilmington.casino.games.roulette.RouletteNumParam;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class RouletteTableTest {
 

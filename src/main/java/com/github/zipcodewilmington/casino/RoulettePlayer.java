@@ -11,7 +11,6 @@ public class RoulettePlayer extends PlayerClass implements GamblerInterface{
 
     @Override
     public void makeBet(int bet) {
-
     }
 
     public int betParam(int choice) {
