@@ -1,6 +1,6 @@
 package com.github.zipcodewilmington.casino;
 
-public class RouletteGame implements GameInterface{
+public class RouletteGame implements GameInterface, GambleGameInterface{
 
     private double payOutMult;
     private RouletteTable table;
@@ -8,13 +8,15 @@ public class RouletteGame implements GameInterface{
     private int ballCurrentNum;
 
 
-    public boolean winBet(String betParam) {return true;}
+    public boolean winBet(int bet, int betParam) {
+        return (bet == betParam);
+    }
 
     public void endGame(){};
 
     @Override
     public void add(PlayerInterface player) {
-
+        roulettePlayer = player;
     }
 
     @Override
@@ -35,5 +37,10 @@ public class RouletteGame implements GameInterface{
     @Override
     public boolean isEndCondition() {
         return false;
+    }
+
+    @Override
+    public int payOutCalc(int betAmount, int payOutMult) {
+        return 0;
     }
 }
