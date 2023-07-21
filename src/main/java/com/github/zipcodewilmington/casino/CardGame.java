@@ -20,11 +20,13 @@ public abstract class CardGame implements GameInterface{
     @Override
     public void add(PlayerInterface player) {
         players.add((CardPlayer) player);
+        playerScores.put((CardPlayer) player, 0);
     }
 
     @Override
     public void remove(PlayerInterface player) {
         players.remove((CardPlayer) player);
+        playerScores.remove((CardPlayer) player);
     }
 
     public void dealCards(int cardsForEach){
