@@ -11,7 +11,7 @@ class NumberGuessPlayerTest {
     @Test
     void incrementScoreTest() {
         //Given
-        NumberGuessPlayer player = new NumberGuessPlayer();
+        NumberGuessPlayer player = new NumberGuessPlayer(null, null);
         player.incrementScore();
         player.incrementScore();
         player.incrementScore();
@@ -30,7 +30,7 @@ class NumberGuessPlayerTest {
     @Test
     void setPlayerScore() {
         //Given
-        NumberGuessPlayer player = new NumberGuessPlayer();
+        NumberGuessPlayer player = new NumberGuessPlayer(null, null);
         player.setPlayerScore(76);
         //When
         int expected = player.getScore();
@@ -42,7 +42,7 @@ class NumberGuessPlayerTest {
     @Test
     void getScoreTest() {
         //Given
-        NumberGuessPlayer player = new NumberGuessPlayer();
+        NumberGuessPlayer player = new NumberGuessPlayer(null, null);
 
         //When
         int expected = player.getScore();
@@ -55,7 +55,7 @@ class NumberGuessPlayerTest {
     @Test
     void calcWinRateTest() {
         //Given
-        NumberGuessPlayer player = new NumberGuessPlayer();
+        NumberGuessPlayer player = new NumberGuessPlayer(null, null);
         player.setPlayerScore(34);
 
         //When
@@ -69,7 +69,7 @@ class NumberGuessPlayerTest {
     @Test
     void updateGameTest() {
         //Given
-        NumberGuessPlayer player = new NumberGuessPlayer();
+        NumberGuessPlayer player = new NumberGuessPlayer(null, null);
         player.setTotalGames(5);
         //When
         player.updateGame(true);

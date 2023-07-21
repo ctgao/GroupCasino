@@ -5,7 +5,9 @@ public class HouseAccount {
     private static HouseAccount houseAccount;
     private int accBalance;
 
-    HouseAccount() {}
+    private HouseAccount() {
+        accBalance = 1_000_000;
+    }
 
     public static synchronized HouseAccount getHouseAccount()  {
         if (houseAccount == null) {
@@ -14,7 +16,7 @@ public class HouseAccount {
         return houseAccount;
     }
 
-    HouseAccount(int accBalance) {
+    private HouseAccount(int accBalance) {
         this.accBalance = accBalance;
     }
 
