@@ -1,5 +1,6 @@
 package com.github.zipcodewilmington.casino.games.blackjack;
 
+import com.github.zipcodewilmington.casino.cardutils.PlayingCard;
 import com.github.zipcodewilmington.utils.IOConsole;
 
 public class DealerPlayer extends BlackJackPlayer {
@@ -30,15 +31,35 @@ public class DealerPlayer extends BlackJackPlayer {
     }
 
     @Override
+    public void hitMe(PlayingCard pc){
+        super.hitMe(pc);
+        printToConsole("Dealer chose to HIT");
+    }
+
+    @Override
+    public void stay(){
+        super.stay();
+        printToConsole("Dealer chose to STAY");
+    }
+
+    @Override
     public void printHand(){
+        super.printToConsole(toString());
+    }
+
+    @Override
+    public String toString(){
         String result = this.getHandOfCards().toString();
         if(!showFirstCard) {
             // hide that first card
             String firstCard = this.getHandOfCards().get(0).toString();
-            result.replace(firstCard, "HIDDEN");
+            result = result.replace(firstCard, "HIDDEN");
         }
-
-        super.printToConsole(result);
+        return String.format("\nDealer Hand: %s", result);
     }
 
+    @Override
+    public String getBustedStatement() {
+        return "Dealer BUSTED! OMG!";
+    }
 }

@@ -16,6 +16,7 @@ public class BlackJackGame extends CardGame implements GambleGameInterface {
         super();
         dealer = new DealerPlayer(console);
         add(dealer);
+        betAmounts = new HashMap<>();
     }
 
     @Override
@@ -58,14 +59,20 @@ public class BlackJackGame extends CardGame implements GambleGameInterface {
     }
 
     public void playerTurn(BlackJackPlayer player) {
+        if(!(player instanceof DealerPlayer)) {
+            dealer.printHand();
+        }
         do{
+            // show the hand first
+            player.printHand();
+
             // while they wanna stay, play
             String playerChoice = player.play();
             if(playerChoice.equals("HIT")){
                 player.hitMe(this.getTheDeck().drawCard());
                 if(player.isHandBusted()){
-                    player.printToConsole("YOU BUSTED! RIP");
-                    player.stay();
+                    player.printToConsole(player.getBustedStatement());
+                    return;
                 }
             }
             else{
@@ -76,14 +83,21 @@ public class BlackJackGame extends CardGame implements GambleGameInterface {
 
     void logPlayerBets() {
         for(CardPlayer cp : super.getPlayers()) {
-            BlackJackPlayer temp = (BlackJackPlayer) cp;
-            int betValue;
-            do {
-                betValue = temp.promptPlayerFoMoney("How much do you wanna bet?");
-            } while(temp.validBet(betValue));
-            betAmounts.put(temp, betValue);
-            temp.makeBet(betValue);
-            HouseAccount.getHouseAccount().acceptMoney(betValue);
+            if(!(cp instanceof DealerPlayer)) {
+                BlackJackPlayer temp = (BlackJackPlayer) cp;
+                int betValue;
+                do {
+                    betValue = temp.promptPlayerFoMoney("How much do you wanna bet?");
+                    if(!temp.validBet(betValue)){
+                        temp.printToConsole(String.format("STOP IT! You're poor! You only have %d in your account!\n\n", temp.getWallet()));
+                    }
+                } while (!temp.validBet(betValue));
+
+                // make the bet transactions
+                betAmounts.put(temp, betValue);
+                temp.makeBet(betValue);
+                HouseAccount.getHouseAccount().acceptMoney(betValue);
+            }
         }
     }
 
@@ -93,13 +107,22 @@ public class BlackJackGame extends CardGame implements GambleGameInterface {
         int dealerScore = dealer.calculateScore();
 
         for(CardPlayer cp : super.getPlayers()) {
-            BlackJackPlayer temp = (BlackJackPlayer) cp;
-            // now calculate funds
-            int betAmount = beatDealer(busted, dealerScore, temp) ? betAmounts.get(temp) : 0;
-            int payout = payOutCalc(betAmount);
-            temp.depositPayOut(payout);
-            // also remove funds from the house account
-            HouseAccount.getHouseAccount().payout(payout);
+            if(!(cp instanceof DealerPlayer)) {
+                BlackJackPlayer temp = (BlackJackPlayer) cp;
+                // now calculate funds
+                int betAmount = beatDealer(busted, dealerScore, temp) ? betAmounts.get(temp) : 0;
+                int payout = payOutCalc(betAmount);
+                // NOW TELL THE PLAYER
+                if(payout != 0) {
+                    temp.printToConsole("WINNER WINNER, CHICKEN DINNER!\n");
+                }
+                else{
+                    temp.printToConsole("You can pour one out for yourself :)\n");
+                }
+                temp.depositPayOut(payout);
+                // also remove funds from the house account
+                HouseAccount.getHouseAccount().payout(payout);
+            }
         }
     }
 

@@ -33,8 +33,6 @@ public class BlackJackPlayer extends CardPlayer implements GamblerInterface {
 
     @Override
     public <SomeReturnType> String play() {
-        // show the hand first
-        printHand();
         // now ask for input
         String choice = promptPlayerForChoice("Would you like to get HIT or STAY?");
         if(choice.toUpperCase().equals("HIT") || choice.toUpperCase().equals("STAY")) {
@@ -112,5 +110,9 @@ public class BlackJackPlayer extends CardPlayer implements GamblerInterface {
     private boolean isFaceCard(PlayingCard pc){
         PlayingCardValue val = pc.getValue();
         return (val.equals(PlayingCardValue.JACK) || val.equals(PlayingCardValue.QUEEN) || val.equals(PlayingCardValue.KING));
+    }
+
+    public String getBustedStatement() {
+        return "YOU BUSTED! RIP";
     }
 }

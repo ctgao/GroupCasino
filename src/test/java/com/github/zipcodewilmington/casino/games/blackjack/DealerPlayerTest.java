@@ -38,7 +38,7 @@ class DealerPlayerTest {
     }
 
     @Test
-    void play() {
+    void playTest() {
         //Given
         String expected = "HIT";
         BlackJackPlayer dealer = new DealerPlayer(null);
@@ -51,7 +51,7 @@ class DealerPlayerTest {
         assertEquals(expected, actualChoice);
     }
     @Test
-    void play1() {
+    void playTest1() {
         //Given
         String expected = "STAY";
         BlackJackPlayer dealer = new DealerPlayer(null);
@@ -62,5 +62,18 @@ class DealerPlayerTest {
         String actualChoice = dealer.play();
         //Then
         assertEquals(expected, actualChoice);
+    }
+
+    @Test
+    void toStringTest() {
+        //Given
+        String expected = "[HIDDEN, 6 of Diamonds]";
+        BlackJackPlayer dealer = new DealerPlayer(null);
+        dealer.receiveCard(new PlayingCard(PlayingCardSuit.DIAMONDS, PlayingCardValue.ACE));
+        dealer.receiveCard(new PlayingCard(PlayingCardSuit.DIAMONDS, PlayingCardValue.SIX));
+        //When
+        String actual = dealer.toString();
+        //Then
+        assertEquals(expected, actual);
     }
 }
