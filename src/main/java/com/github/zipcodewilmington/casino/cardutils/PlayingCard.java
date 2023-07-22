@@ -41,4 +41,10 @@ public class PlayingCard implements Comparable<PlayingCard>{
         int valuesCompared = this.value.compareTo(otherCard.getValue());
         return suitsCompared * 13 + valuesCompared;
     }
+    // BIG NOTE : SHOULD I MAKE A COMPARATOR SO THE PLAYING CARDS CAN BE SORTED IN DIFFERENT WAYS?
+    // NOT SURE YET - BUT ITS AN IDEA - GoFish and Spades hands are going to be sorted differently
+    public int compareValue(PlayingCard otherCard){
+        return this.value.compareTo(otherCard.getValue());
+    }
+
 }
