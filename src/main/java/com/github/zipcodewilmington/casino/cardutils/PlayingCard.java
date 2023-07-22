@@ -1,6 +1,6 @@
 package com.github.zipcodewilmington.casino.cardutils;
 
-public class PlayingCard {
+public class PlayingCard implements Comparable<PlayingCard>{
     PlayingCardSuit suit;
     PlayingCardValue value;
 
@@ -19,15 +19,6 @@ public class PlayingCard {
     }
 
     // Other methods
-    /**
-     * same as Integer.compareTo(), but only for the card values
-     * @param otherCard
-     * @return neg = less than, 0 = equal to, or pos = greater than otherCard
-     */
-    public int compareValue(PlayingCard otherCard){
-        return this.value.compareTo(otherCard.getValue());
-    }
-
     @Override
     public String toString() {
         return value + " of " + suit;
@@ -37,5 +28,17 @@ public class PlayingCard {
     public boolean equals(Object o) {
         PlayingCard other = (PlayingCard) o;
         return other.getSuit().equals(suit) && other.getValue().equals(value);
+    }
+
+    /**
+     * same as .compareTo(), but only for the card values
+     * @param otherCard
+     * @return neg = this less than, 0 = equal to, or pos = this greater than otherCard
+     */
+    @Override
+    public int compareTo(PlayingCard otherCard) {
+        int suitsCompared = this.suit.compareTo(otherCard.getSuit());
+        int valuesCompared = this.value.compareTo(otherCard.getValue());
+        return suitsCompared * 13 + valuesCompared;
     }
 }
