@@ -1,5 +1,6 @@
 package com.github.zipcodewilmington.casino.games.spades;
 
+import com.github.zipcodewilmington.casino.CasinoAccount;
 import com.github.zipcodewilmington.casino.cardutils.HandOfCards;
 import com.github.zipcodewilmington.casino.cardutils.PlayingCard;
 import com.github.zipcodewilmington.casino.cardutils.PlayingCardSuit;
@@ -13,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class SpadesPlayerTest {
 
     @Test
-    void isHumanPlayer() {
+    void isHumanPlayerTest() {
         // Given
         SpadesPlayer player = new SpadesPlayer(null);
         // When
@@ -22,9 +23,18 @@ class SpadesPlayerTest {
         assertEquals(false, actual);
     }
     @Test
-    void isHumanPlayer1() {
+    void isHumanPlayerTest1() {
         // Given
         SpadesPlayer player = new SpadesPlayer(null, null);
+        // When
+        boolean actual = player.isHumanPlayer();
+        // Then
+        assertEquals(false, actual);
+    }
+    @Test
+    void isHumanPlayerTest2() {
+        // Given
+        SpadesPlayer player = new SpadesPlayer(new CasinoAccount("", "", 0), null);
         // When
         boolean actual = player.isHumanPlayer();
         // Then
@@ -32,7 +42,7 @@ class SpadesPlayerTest {
     }
 
     @Test
-    void setHumanPlayer() {
+    void setHumanPlayerTest() {
         // Given
         SpadesPlayer player = new SpadesPlayer(null);
         // When
@@ -44,7 +54,7 @@ class SpadesPlayerTest {
     }
 
     @Test
-    void sortHand() {
+    void sortHandTest() {
         //Given
         HandOfCards hand = new HandOfCards();
         hand.addCard(new PlayingCard(PlayingCardSuit.SPADES, PlayingCardValue.FIVE));
@@ -69,7 +79,7 @@ class SpadesPlayerTest {
     }
 
     @Test
-    void validateCard() {
+    void validateCardTest() {
         // Given
         HandOfCards hands = new HandOfCards();
         PlayingCard pc = new PlayingCard(PlayingCardSuit.SPADES, PlayingCardValue.KING);
@@ -81,7 +91,7 @@ class SpadesPlayerTest {
         assertEquals(false, actual);
     }
     @Test
-    void validateCard1() {
+    void validateCardTest1() {
         // Given
         HandOfCards hands = new HandOfCards();
         PlayingCard pc = new PlayingCard(PlayingCardSuit.SPADES, PlayingCardValue.KING);
@@ -93,7 +103,7 @@ class SpadesPlayerTest {
         assertEquals(true, actual);
     }
     @Test
-    void validateCard2() {
+    void validateCardTest2() {
         // Given
         HandOfCards hands = new HandOfCards();
         PlayingCard pc = new PlayingCard(PlayingCardSuit.SPADES, PlayingCardValue.KING);
@@ -105,7 +115,7 @@ class SpadesPlayerTest {
         assertEquals(false, actual);
     }
     @Test
-    void validateCard3() {
+    void validateCardTest3() {
         // Given
         HandOfCards hands = new HandOfCards();
         PlayingCard pc = new PlayingCard(PlayingCardSuit.SPADES, PlayingCardValue.KING);
@@ -117,7 +127,7 @@ class SpadesPlayerTest {
         assertEquals(true, actual);
     }
     @Test
-    void validateCard4() {
+    void validateCardTest4() {
         // Given
         HandOfCards hands = new HandOfCards();
         PlayingCard pc = new PlayingCard(PlayingCardSuit.DIAMONDS, PlayingCardValue.KING);
@@ -130,7 +140,7 @@ class SpadesPlayerTest {
         assertEquals(false, actual);
     }
     @Test
-    void validateCard5() {
+    void validateCardTest5() {
         // Given
         HandOfCards hands = new HandOfCards();
         PlayingCard pc = new PlayingCard(PlayingCardSuit.DIAMONDS, PlayingCardValue.KING);
@@ -143,7 +153,7 @@ class SpadesPlayerTest {
     }
 
     @Test
-    void getScore() {
+    void getScoreTest() {
         // Given
         int expected = 0;
         SpadesPlayer player = new SpadesPlayer(null);

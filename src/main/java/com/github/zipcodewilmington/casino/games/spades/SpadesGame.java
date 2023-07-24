@@ -36,8 +36,12 @@ public class SpadesGame extends CardGame {
 
     @Override
     public void run() {
+        // see how many users are playing - should be 4
+        while(getPlayers().size() < 4){
+            this.add(new SpadesPlayer(null, getPlayers().get(0).getPlayerInput()));
+        }
+
         // set the player order first
-        playerOrder = new int[getPlayers().size()];
         setPlayerOrder(0);
 
         // deal the cards to all players
@@ -51,20 +55,31 @@ public class SpadesGame extends CardGame {
         while(!isEndCondition()){
             // play through a round
             PlayingCard[] curCards = playRound();
+
             // get the winner
             int indexOfWinningPlayer = getRoundWinner(curCards);
             SpadesPlayer winner = (SpadesPlayer) getPlayers().get(indexOfWinningPlayer);
+            winner.printToConsole(String.format("\nPlayer %d won this trick!\n", indexOfWinningPlayer+1));
+
             // increase the score and set up for the next round
             winner.takeATrick();
             setPlayerOrder(indexOfWinningPlayer);
         }
+        // NOTE FOR FUTURE SELF
+        // WHEN THE PLAYER WINS THE TRICK, THERE ARE TWO EMPTY LINES BEFORE THEIR HAND GETS SHOWN
+        // WHEN THE NPC WINS THE TRICK, THERE ARE NO EMPTY LINES BEFORE THE STATUS UPDATE
         
         // now print the winner!
         // also don't forget to update their score
         SpadesPlayer youWon = getOverallWinner();
+        if(youWon.isHumanPlayer()){
+            youWon.printToConsole("YOU WINNIN' SON!\n");
+        }
+        else{
+            youWon.printToConsole("A computer player won over you.\nWah-wah-wah wah-oh-wah\n");
+        }
         distributeWins(youWon);
         printWinner();
-        
     }
 
     private void forceSort() {
@@ -98,13 +113,19 @@ public class SpadesGame extends CardGame {
     private PlayingCard[] playRound() {
         PlayingCard[] result = new PlayingCard[getPlayers().size()];
         PlayingCardSuit leadingSuit = null;
-        int i = 0;
+        int index = 0;
 
         // iterate over all the players
-        for(CardPlayer cp : getPlayers()){
-            SpadesPlayer player = (SpadesPlayer) cp;
+        for(int i : playerOrder){
+            SpadesPlayer player = (SpadesPlayer) getPlayers().get(i);
             PlayingCard temp = player.play(leadingSuit, spadesBroken);
-            result[i++] = temp;
+
+            //use and print the card that got played
+            player.useCard(temp);
+            player.printToConsole(String.format("Player %d played %s", i+1, temp.toString()));
+
+            // save the card played in an array
+            result[index++] = temp;
             if(leadingSuit == null){
                 leadingSuit = temp.getSuit();
             }

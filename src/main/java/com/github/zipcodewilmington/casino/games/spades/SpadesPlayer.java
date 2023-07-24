@@ -16,7 +16,9 @@ public class SpadesPlayer extends CardPlayer {
 
     public SpadesPlayer(CasinoAccount wallet, IOConsole console) {
         super(wallet, console);
-        humanPlayer = true;
+        if(wallet != null){
+            humanPlayer = true;
+        }
     }
 
     public SpadesPlayer(HandOfCards hand) {
@@ -49,12 +51,17 @@ public class SpadesPlayer extends CardPlayer {
         PlayingCard playerInput;
         do{     // keep getting a card until it's correct
             if (humanPlayer) {
+                this.printToConsole("");
                 printHand();
                 playerInput = humanChoice();
+
+                if(!validateCard(winningSuit, playerInput, canPlaySpades)){
+                    this.printToConsole("INVALID CHOICE!");
+                }
             } else {
                 playerInput = computerChoice(winningSuit);
             }
-        } while(validateCard(winningSuit, playerInput, canPlaySpades));
+        } while(!validateCard(winningSuit, playerInput, canPlaySpades));
 
         return playerInput;
     }
@@ -94,15 +101,15 @@ public class SpadesPlayer extends CardPlayer {
     public boolean validateCard(PlayingCardSuit winningSuit, PlayingCard input, boolean canPlaySpades) {
         // first check to see if the input card exists in your hand
         if(!getHandOfCards().contains(input)){
-            if(humanPlayer){
-                this.printToConsole("INVALID CHOICE! Please pick a card that EXISTS in your hand.");
-            }
             return false;
         }
         // check for no leading suit
         if(winningSuit == null){
             // check if you can play spades and if you can't, check if its a spades input
-            return canPlaySpades || !input.getSuit().equals(PlayingCardSuit.SPADES);
+            return !input.getSuit().equals(PlayingCardSuit.SPADES) || canPlaySpades;
+            // LOGICAL ERROR IS HERE
+            // FIRST PERSON CAN PLAY SPADES EVEN THO SPADES HAVEN'T BEEN BROKEN
+            // NEED TO RETHINK DOING THIS
         }
         // check if you don't contain suit, and if you don't then check input for the suit
         return !getHandOfCards().containsSuit(winningSuit) || input.getSuit().equals(winningSuit);
