@@ -34,6 +34,21 @@ public class NumberGuessGame implements GameInterface{
 
     }
 
+    public int setTargetNumber(int targetNumber) {
+        this.targetNumber = targetNumber;
+        return targetNumber;
+    }
+
+    public int setGuess(int guess) {
+        this.guess = guess;
+        return guess;
+    }
+
+
+    public void setGuessesRemaining(int guessesRemaining) {
+        this.guessesRemaining = guessesRemaining;
+    }
+
     public boolean validateGuess() {
         if (guess == targetNumber) {
             return true;
