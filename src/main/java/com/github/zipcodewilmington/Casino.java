@@ -57,10 +57,13 @@ public class Casino implements Runnable {
                 console.println("Welcome to the account-creation screen.");
                 String accountName = console.getStringInput("Enter your account name:");
                 String accountPassword = console.getStringInput("Enter your account password:");
+                if(casinoAccountManager.getAccount(accountName, accountPassword) != null){
+                    errorMessage.println("This account already exists!");
+                }
                 CasinoAccount newAccount = casinoAccountManager.createAccount(accountName, accountPassword);
                 casinoAccountManager.registerAccount(newAccount);
             }
-            clearScreen();
+//            clearScreen();
         } while (!"logout".equals(arcadeDashBoardInput));
     }
 
@@ -88,12 +91,11 @@ public class Casino implements Runnable {
     }
 
     // created this function so i can clear the screen in between different game playthroughs
+    // right now this doesn't work for shit
     public void clearScreen(){
         // this first part is an ANSI ESCAPE CODE
         // it will clear the screen of text
-        System.out.print("\033[H\033[2J");
-        // flush resets the cursor position at the top of the screen
-        System.out.flush();
+        console.print("\033[H\033[2J");
     }
 
     // created this function for printing mean errors to the user
