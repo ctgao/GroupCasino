@@ -32,11 +32,12 @@ public class BlackJackPlayer extends CardPlayer implements GamblerInterface {
     }
 
     @Override
-    public <SomeReturnType> String play() {
+    public <String> String play() {
         // now ask for input
-        String choice = promptPlayerForChoice("Would you like to get HIT or STAY?");
-        if(choice.toUpperCase().equals("HIT") || choice.toUpperCase().equals("STAY")) {
-            return choice.toUpperCase();
+        String choice = (String) promptPlayerForChoice("Would you like to get HIT or STAY?");
+        if(choice.toString().toUpperCase().equals("HIT") || choice.toString().toUpperCase().equals("STAY")) {
+            choice = (String) choice.toString().toUpperCase();
+            return choice;
         }
         throw new RuntimeException("Not a VALID BlackJack option. SHAME!");
     }

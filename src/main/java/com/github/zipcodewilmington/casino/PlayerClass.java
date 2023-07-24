@@ -23,6 +23,10 @@ public abstract class PlayerClass implements PlayerInterface {
         this.totalGamesPlayed = 0;
     }
 
+    public IOConsole getPlayerInput() {
+        return playerInput;
+    }
+
     public Integer getWallet() {
         return wallet.getAccBalance();
     }

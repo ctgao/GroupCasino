@@ -29,7 +29,7 @@ public class RoulettePlayer extends PlayerClass implements GamblerInterface {
     }
 
     @Override
-    public <SomeReturnType> String play() {
+    public <SomeReturnType> SomeReturnType play() {
         return null;
     }
 }

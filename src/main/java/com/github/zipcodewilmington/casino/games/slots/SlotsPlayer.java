@@ -37,7 +37,7 @@ public class SlotsPlayer extends PlayerClass implements GamblerInterface {
 
 
     @Override
-    public <SomeReturnType> String play() {
+    public <String> String play() {
         return null;
     }
 

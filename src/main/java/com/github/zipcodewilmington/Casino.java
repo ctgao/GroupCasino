@@ -10,6 +10,8 @@ import com.github.zipcodewilmington.casino.games.numberguess.NumberGuessGame;
 import com.github.zipcodewilmington.casino.games.numberguess.NumberGuessPlayer;
 import com.github.zipcodewilmington.casino.games.slots.SlotsGame;
 import com.github.zipcodewilmington.casino.games.slots.SlotsPlayer;
+import com.github.zipcodewilmington.casino.games.spades.SpadesGame;
+import com.github.zipcodewilmington.casino.games.spades.SpadesPlayer;
 import com.github.zipcodewilmington.utils.AnsiColor;
 import com.github.zipcodewilmington.utils.IOConsole;
 
@@ -37,7 +39,9 @@ public class Casino implements Runnable {
                     } else if (gameSelectionInput.equals("NUMBERGUESS")) {
                         play(new NumberGuessGame(), new NumberGuessPlayer(casinoAccount, console));
                     } else if (gameSelectionInput.equals("BLACKJACK")) {
-                            play(new BlackJackGame(console), new BlackJackPlayer(casinoAccount, console));
+                        play(new BlackJackGame(console), new BlackJackPlayer(casinoAccount, console));
+                    }else if (gameSelectionInput.equals("SPADES")) {
+                        play(new SpadesGame(), new SpadesPlayer(casinoAccount, console));
                     } else {
                         // TODO - implement better exception handling
                         String errorMessage = "[ %s ] is an invalid game selection";
@@ -70,7 +74,7 @@ public class Casino implements Runnable {
         return console.getStringInput(new StringBuilder()
                 .append("Welcome to the Game Selection Dashboard!")
                 .append("\nFrom here, you can select any of the following options:")
-                .append("\n\t[ SLOTS ], [ NUMBERGUESS ], [ BLACKJACK ]")
+                .append("\n\t[ SLOTS ], [ NUMBERGUESS ], [ BLACKJACK ], [ SPADES ]")
                 .toString());
     }
 
