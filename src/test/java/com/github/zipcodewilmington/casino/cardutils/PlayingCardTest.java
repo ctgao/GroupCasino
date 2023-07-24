@@ -45,35 +45,44 @@ public class PlayingCardTest {
     }
 
     @Test
-    public void compareValueTest1() {
+    public void compareToTest1() {
         // Given
-        PlayingCard pc = new PlayingCard(PlayingCardSuit.DIAMONDS, PlayingCardValue.FIVE);
-        PlayingCard otherCard = new PlayingCard(PlayingCardSuit.HEARTS, PlayingCardValue.FIVE);
+        PlayingCard pc = new PlayingCard(PlayingCardSuit.SPADES, PlayingCardValue.FIVE);
+        PlayingCard otherCard = new PlayingCard(PlayingCardSuit.DIAMONDS, PlayingCardValue.FIVE);
         // When
-        int actual = pc.compareValue(otherCard);
+        int actual = pc.compareTo(otherCard);
         // Then
-        assertEquals(true, actual == 0); // should be equal
+        assertEquals(true, actual > 0); // should be greater than
     }
     @Test
-    public void compareValueTest2() {
+    public void compareToTest2() {
+        // Given
+        PlayingCard pc = new PlayingCard(PlayingCardSuit.HEARTS, PlayingCardValue.THREE);
+        PlayingCard otherCard = new PlayingCard(PlayingCardSuit.DIAMONDS, PlayingCardValue.FIVE);
+        // When
+        int actual = pc.compareTo(otherCard);
+        // Then
+        assertEquals(true, actual < 0); // should be less than
+    }
+    @Test
+    public void compareToTest3() {
+        // Given
+        PlayingCard pc = new PlayingCard(PlayingCardSuit.CLUBS, PlayingCardValue.THREE);
+        PlayingCard otherCard = new PlayingCard(PlayingCardSuit.CLUBS, PlayingCardValue.THREE);
+        // When
+        int actual = pc.compareTo(otherCard);
+        // Then
+        assertEquals(true, actual == 0); // should be EQUAL
+    }
+    @Test
+    public void compareToTest4() {
         // Given
         PlayingCard pc = new PlayingCard(PlayingCardSuit.DIAMONDS, PlayingCardValue.THREE);
-        PlayingCard otherCard = new PlayingCard(PlayingCardSuit.HEARTS, PlayingCardValue.FIVE);
+        PlayingCard otherCard = new PlayingCard(PlayingCardSuit.CLUBS, PlayingCardValue.THREE);
         // When
-        int actual = pc.compareValue(otherCard);
+        int actual = pc.compareTo(otherCard);
         // Then
-        assertEquals(true, actual < 0); // should be less than 0
-    }
-    @Test
-    public void compareValueTest3() {
-        // Given
-        int expected = 1;
-        PlayingCard pc = new PlayingCard(PlayingCardSuit.DIAMONDS, PlayingCardValue.FIVE);
-        PlayingCard otherCard = new PlayingCard(PlayingCardSuit.HEARTS, PlayingCardValue.THREE);
-        // When
-        int actual = pc.compareValue(otherCard);
-        // Then
-        assertEquals(true, actual > 0); // should be greater than 0
+        assertEquals(true, actual > 0); // should be greater than
     }
 
     @Test

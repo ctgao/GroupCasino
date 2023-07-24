@@ -49,7 +49,7 @@ public class BlackJackPlayer extends CardPlayer implements GamblerInterface {
 
     @Override
     public boolean validBet(int bet) {
-        return this.getWallet() >= bet;
+        return this.getWallet() >= bet && this.getWallet() > 0;
     }
 
     @Override
