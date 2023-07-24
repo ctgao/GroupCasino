@@ -1,13 +1,14 @@
 package com.github.zipcodewilmington.casino.games.blackjack;
 
 import com.github.zipcodewilmington.casino.cardutils.PlayingCard;
+import com.github.zipcodewilmington.utils.AnsiColor;
 import com.github.zipcodewilmington.utils.IOConsole;
 
 public class DealerPlayer extends BlackJackPlayer {
     private boolean showFirstCard;
 
-    public DealerPlayer(IOConsole console) {
-        super(null, console);
+    public DealerPlayer() {
+        super(null, new IOConsole(AnsiColor.PURPLE));
         showFirstCard = false;
     }
 
@@ -44,7 +45,9 @@ public class DealerPlayer extends BlackJackPlayer {
 
     @Override
     public void printHand(){
-        super.printToConsole(toString());
+        // print the status part with auto
+        this.getPlayerInput().print("Dealer's Hand: ");
+        printHand(!showFirstCard);
     }
 
     @Override
@@ -55,11 +58,11 @@ public class DealerPlayer extends BlackJackPlayer {
             String firstCard = this.getHandOfCards().get(0).toString();
             result = result.replace(firstCard, "HIDDEN");
         }
-        return String.format("\nDealer Hand: %s", result);
+        return String.format("\nDealer's Hand: %s", result);
     }
 
     @Override
     public String getBustedStatement() {
-        return "Dealer BUSTED! OMG!";
+        return "Dealer BUSTED! OMG!\n";
     }
 }

@@ -114,6 +114,6 @@ public class BlackJackPlayer extends CardPlayer implements GamblerInterface {
     }
 
     public String getBustedStatement() {
-        return "YOU BUSTED! RIP";
+        return "YOU BUSTED! RIP\n";
     }
 }

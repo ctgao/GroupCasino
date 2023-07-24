@@ -13,7 +13,7 @@ class BlackJackGameTest {
     void payOutCalcTest() {
         // Given
         int expected = 14;
-        BlackJackGame blackjack = new BlackJackGame(null);
+        BlackJackGame blackjack = new BlackJackGame();
         // When
         int actual = blackjack.payOutCalc(expected);
         // Then

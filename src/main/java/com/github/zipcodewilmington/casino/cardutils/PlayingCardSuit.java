@@ -1,7 +1,7 @@
 package com.github.zipcodewilmington.casino.cardutils;
 
 public enum PlayingCardSuit {
-    HEARTS("Hearts"), CLUBS("Clubs"), DIAMONDS("Diamonds"), SPADES("Spades");
+    HEARTS("♥"), CLUBS("♣"), DIAMONDS("♦"), SPADES("♠");
 
     private String name;
 

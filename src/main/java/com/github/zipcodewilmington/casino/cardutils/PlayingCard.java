@@ -21,7 +21,7 @@ public class PlayingCard implements Comparable<PlayingCard>{
     // Other methods
     @Override
     public String toString() {
-        return value + " of " + suit;
+        return value + " " + suit;
     }
 
     @Override

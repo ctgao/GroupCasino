@@ -88,7 +88,7 @@ public class PlayingCardTest {
     @Test
     public void toStringTest1() {
         // Given
-        String expected = "5 of Diamonds";
+        String expected = "5 ♦";
         PlayingCard pc = new PlayingCard(PlayingCardSuit.DIAMONDS, PlayingCardValue.FIVE);
         // When
         String actual = pc.toString();
@@ -98,7 +98,7 @@ public class PlayingCardTest {
     @Test
     public void toStringTest2() {
         // Given
-        String expected = "A of Spades";
+        String expected = "A ♠";
         PlayingCard pc = new PlayingCard(PlayingCardSuit.SPADES, PlayingCardValue.ACE);
         // When
         String actual = pc.toString();
@@ -108,7 +108,7 @@ public class PlayingCardTest {
     @Test
     public void toStringTest3() {
         // Given
-        String expected = "J of Clubs";
+        String expected = "J ♣";
         PlayingCard pc = new PlayingCard(PlayingCardSuit.CLUBS, PlayingCardValue.JACK);
         // When
         String actual = pc.toString();
@@ -118,7 +118,7 @@ public class PlayingCardTest {
     @Test
     public void toStringTest4() {
         // Given
-        String expected = "K of Hearts";
+        String expected = "K ♥";
         PlayingCard pc = new PlayingCard(PlayingCardSuit.HEARTS, PlayingCardValue.KING);
         // When
         String actual = pc.toString();
