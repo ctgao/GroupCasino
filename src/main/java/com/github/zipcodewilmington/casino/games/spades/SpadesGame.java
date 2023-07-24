@@ -5,8 +5,6 @@ import com.github.zipcodewilmington.casino.CardPlayer;
 import com.github.zipcodewilmington.casino.cardutils.PlayingCard;
 import com.github.zipcodewilmington.casino.cardutils.PlayingCardSuit;
 
-import javax.smartcardio.Card;
-
 public class SpadesGame extends CardGame {
     boolean spadesBroken;
     int[] playerOrder;
@@ -15,6 +13,25 @@ public class SpadesGame extends CardGame {
         super();
         // TRY TO CHANGE HOW THE PLAYER ARRAY LIST IS INSTANTIATED PER CARD PLAYER CLASS TO SEE IF IT'LL BE EASIER THAT WAY
         spadesBroken = false;
+        playerOrder = null;
+    }
+
+    public void setPlayerOrder(int firstPlayerIndex) {
+        int n = getPlayers().size();
+
+        // NEED THIS JUST IN CASE YOU HAVEN'T DONE ANYTHING!
+        if(playerOrder == null){
+            playerOrder = new int[getPlayers().size()];
+        }
+        for(int i = 0; i < n; i++){
+            playerOrder[i] = (firstPlayerIndex + i) % n;
+        }
+    }
+    public int[] getPlayerOrder() {
+        return playerOrder;
+    }
+    public boolean isSpadesBroken(){
+        return spadesBroken;
     }
 
     @Override
@@ -57,7 +74,7 @@ public class SpadesGame extends CardGame {
         }
     }
 
-    private SpadesPlayer getOverallWinner() {
+    public SpadesPlayer getOverallWinner() {
         int maxScore = Integer.MIN_VALUE;
         int maxIndex = Integer.MIN_VALUE;
         for(int i = 0; i < getPlayers().size(); i++) {
@@ -74,7 +91,7 @@ public class SpadesGame extends CardGame {
     private void distributeWins(SpadesPlayer youWon) {
         for(CardPlayer cp : getPlayers()) {
             SpadesPlayer player = (SpadesPlayer) cp;
-            player.incrementScore(player.equals(youWon));
+            player.incrementWins(player.equals(youWon));
         }
     }
 
@@ -96,23 +113,29 @@ public class SpadesGame extends CardGame {
     }
 
     public int getRoundWinner(PlayingCard[] curCards){
-        PlayingCard maxPC = null;
-        int maxIndex = Integer.MIN_VALUE;
+        PlayingCard maxPC = curCards[0];
+        int maxIndex = 0;
         for(int i = 0; i < curCards.length; i++){
             PlayingCard pc = curCards[i];
-            if(maxPC == null || maxPC.compareTo(pc) < 0){
+            if(compareToFirstCard(maxPC, pc)){
                 maxPC = pc;
                 maxIndex = i;
             }
         }
+        // DO A CHECK HERE! If the winning card is a spade, then have to change spades broken
+        if(maxPC.getSuit().equals(PlayingCardSuit.SPADES)){
+            spadesBroken = true;
+        }
         return playerOrder[maxIndex];
     }
 
-    private void setPlayerOrder(int firstPlayerIndex) {
-        int n = playerOrder.length;
-
-        for(int i = 0; i < n; i++){
-            playerOrder[i] = (firstPlayerIndex + i) % n;
+    private boolean compareToFirstCard(PlayingCard maxPC, PlayingCard pc) {
+        // if they are the same suit, check
+        if(maxPC.getSuit().equals(pc.getSuit())){
+            return maxPC.compareTo(pc) < 0;
+        }
+        else{
+            return pc.getSuit().equals(PlayingCardSuit.SPADES);
         }
     }
 

@@ -46,73 +46,73 @@ public class SpadesPlayer extends CardPlayer {
     }
 
     public PlayingCard play(PlayingCardSuit winningSuit, boolean canPlaySpades) {
-        if(humanPlayer){
-            printHand();
-            return humanChoice(winningSuit, canPlaySpades);
-        }
-        else{
-            return computerChoice(winningSuit, canPlaySpades);
-        }
+        PlayingCard playerInput;
+        do{     // keep getting a card until it's correct
+            if (humanPlayer) {
+                printHand();
+                playerInput = humanChoice();
+            } else {
+                playerInput = computerChoice(winningSuit);
+            }
+        } while(validateCard(winningSuit, playerInput, canPlaySpades));
+
+        return playerInput;
     }
 
-    private PlayingCard computerChoice(PlayingCardSuit winningSuit, boolean canPlaySpades) {
+    private PlayingCard computerChoice(PlayingCardSuit winningSuit) {
         Random rand = new Random();
         int cardIndex;
-        // no winning suit? just pick a card
-        if(winningSuit == null || getHandOfCards().containsSuit(winningSuit)){
+        // no winning suit at all or none in hand? just pick a card, ANY CARD
+        if(winningSuit == null || !getHandOfCards().containsSuit(winningSuit)){
             cardIndex = rand.nextInt(getHandOfCards().size());
         }
         else{
             // if you have the suit, pick a card in that range
             // count the number of cards based on your current suit
-            int countSameSuit = 0;
             // save the starting index of said suit
+            int countSameSuit = 0;
             int startingIndexOfSuit = Integer.MAX_VALUE;
             for(int i = 0; i < getHandOfCards().size(); i++){
                 PlayingCard pc = getHandOfCards().get(i);
                 if(pc.getSuit().equals(winningSuit)){
                     countSameSuit++;
                     if(startingIndexOfSuit == Integer.MAX_VALUE){
-                        // if the var only contains max value, then this is the start of this suit
+                        // if the var only contains max value, then this is the start of the suit
                         startingIndexOfSuit = i;
                     }
                 }
             }
-            cardIndex = selectCard(startingIndexOfSuit, countSameSuit, rand);
+            cardIndex = rand.nextInt(countSameSuit) + startingIndexOfSuit;
         }
         return getHandOfCards().get(cardIndex);
     }
 
-    public int selectCard(int startingIndex, int totalCards, Random rand) {
-        if(totalCards == 0){
-            // NO CARDS!!!
-            return rand.nextInt(getHandOfCards().size());
-        }
-        // we have some of said suit
-        return rand.nextInt(totalCards) + startingIndex;
+    private PlayingCard humanChoice() {
+        return this.promptForCard("Which card would you like to play?");
     }
 
-    private PlayingCard humanChoice(PlayingCardSuit winningSuit, boolean canPlaySpades) {
-        PlayingCard input;
-        do {
-            input = this.promptForCard("Which card would you like to play?");
-            if(!validateCard(winningSuit, input)){
-                this.printToConsole("INVALID CHOICE! Please pick another card.");
-            }
-        } while(!validateCard(winningSuit, input));
-        return null;
-    }
-
-    public boolean validateCard(PlayingCardSuit winningSuit, PlayingCard input) {
+    public boolean validateCard(PlayingCardSuit winningSuit, PlayingCard input, boolean canPlaySpades) {
         // first check to see if the input card exists in your hand
-        if(getHandOfCards().cont)
+        if(!getHandOfCards().contains(input)){
+            if(humanPlayer){
+                this.printToConsole("INVALID CHOICE! Please pick a card that EXISTS in your hand.");
+            }
+            return false;
+        }
+        // check for no leading suit
+        if(winningSuit == null){
+            // check if you can play spades and if you can't, check if its a spades input
+            return canPlaySpades || !input.getSuit().equals(PlayingCardSuit.SPADES);
+        }
+        // check if you don't contain suit, and if you don't then check input for the suit
+        return !getHandOfCards().containsSuit(winningSuit) || input.getSuit().equals(winningSuit);
     }
 
     public void takeATrick(){
         tricksTaken++;
     }
 
-    public void incrementScore(boolean didYouWin){
+    public void incrementWins(boolean didYouWin){
         if(didYouWin){
             setTotalGamesWon(getTotalGamesWon() + 1);
         }
