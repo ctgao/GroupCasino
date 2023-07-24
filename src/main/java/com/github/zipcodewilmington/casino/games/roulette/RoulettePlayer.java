@@ -20,7 +20,7 @@ public class RoulettePlayer extends PlayerClass implements GamblerInterface {
 
     @Override
     public boolean validBet(int bet) {
-        return (bet <= this.getWallet());
+        return (bet <= this.getWallet() && bet > 0);
     }
 
     @Override
