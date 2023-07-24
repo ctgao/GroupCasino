@@ -10,6 +10,7 @@ public enum AnsiColor {
     RED("\u001B[91m"),
     GREEN("\u001B[32m"),
     YELLOW("\u001B[93m"),
+    DULL_CYAN("\u001B[36m"),
     BLUE("\u001B[94m"),
     PURPLE("\u001B[35m"),
     CYAN("\u001B[96m"),

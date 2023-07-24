@@ -1,6 +1,16 @@
 package com.github.zipcodewilmington.casino.cardutils;
 
+import com.github.zipcodewilmington.utils.AnsiColor;
+import com.github.zipcodewilmington.utils.IOConsole;
+
 public class PlayingCard implements Comparable<PlayingCard>{
+    // for printing in pretty colors
+    final IOConsole redCards = new IOConsole(AnsiColor.RED);
+    final IOConsole blackCards = new IOConsole(AnsiColor.BLACK);
+    final IOConsole whiteBG = new IOConsole(AnsiColor.WHITE_BACKGROUND);
+    final IOConsole resetBG = new IOConsole(AnsiColor.AUTO);
+
+    // these local vars are useful
     PlayingCardSuit suit;
     PlayingCardValue value;
 
@@ -30,6 +40,10 @@ public class PlayingCard implements Comparable<PlayingCard>{
         return other.getSuit().equals(suit) && other.getValue().equals(value);
     }
 
+    private boolean isRedCard(){
+        return suit.equals(PlayingCardSuit.HEARTS) || suit.equals(PlayingCardSuit.DIAMONDS);
+    }
+
     /**
      * same as .compareTo(), but only for the card values
      * @param otherCard
@@ -47,4 +61,15 @@ public class PlayingCard implements Comparable<PlayingCard>{
         return this.value.compareTo(otherCard.getValue());
     }
 
+    //for printing cards out in pretty pretty colors
+    public void printCardWithColor(){
+        whiteBG.print("");
+        if(isRedCard()){
+            redCards.print(toString());
+        }
+        else{
+            blackCards.print(toString());
+        }
+        resetBG.print("");
+    }
 }

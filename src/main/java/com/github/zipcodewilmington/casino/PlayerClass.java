@@ -1,5 +1,7 @@
 package com.github.zipcodewilmington.casino;
 
+import com.github.zipcodewilmington.casino.games.blackjack.BlackJackPlayer;
+import com.github.zipcodewilmington.casino.games.blackjack.DealerPlayer;
 import com.github.zipcodewilmington.utils.IOConsole;
 
 public abstract class PlayerClass implements PlayerInterface {
@@ -69,6 +71,15 @@ public abstract class PlayerClass implements PlayerInterface {
     public Integer promptPlayerFoMoney(String money) {
         Integer playerWantToSpend = playerInput.getIntegerInput(money);
         return playerWantToSpend;
+    }
+
+    public boolean promptPlayerToPlayAgain(String prompt) {
+        String choice = promptPlayerForChoice(prompt);
+        if (choice.toUpperCase().contains("YES")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void printToConsole(String prompt) {

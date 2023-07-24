@@ -1,5 +1,6 @@
 package com.github.zipcodewilmington.casino.games.blackjack;
 
+import com.github.zipcodewilmington.Casino;
 import com.github.zipcodewilmington.casino.CardGame;
 import com.github.zipcodewilmington.casino.CardPlayer;
 import com.github.zipcodewilmington.casino.GambleGameInterface;
@@ -40,7 +41,6 @@ public class BlackJackGame extends CardGame implements GambleGameInterface {
                     playerTurn(temp);
                 }
             }
-
             // now the dealer takes their turn
             dealer.setShowFirstCard(true);
             playerTurn(dealer);
@@ -52,7 +52,6 @@ public class BlackJackGame extends CardGame implements GambleGameInterface {
 
             //ask for another round
             continueOrNot = wannaLoseMoreMoney();
-            blackjackMenu.println("");
         } while(continueOrNot);
     }
 
@@ -60,12 +59,7 @@ public class BlackJackGame extends CardGame implements GambleGameInterface {
         for(CardPlayer cp : super.getPlayers()) {
             if(!(cp instanceof DealerPlayer)) {
                 BlackJackPlayer player = (BlackJackPlayer) cp;
-                String choice = player.promptPlayerForChoice("Wanna try your luck once more?");
-                if (choice.toUpperCase().contains("YES")) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return player.promptPlayerToPlayAgain("Wanna try your luck once more?");
             }
         }
         return false;
@@ -83,6 +77,7 @@ public class BlackJackGame extends CardGame implements GambleGameInterface {
         // clear your hand of cards
         for(CardPlayer cp : super.getPlayers()){
             cp.clearHand();
+            ((BlackJackPlayer) cp).resetStay();
         }
         // reset the deck
         getTheDeck().reclaimCards();
@@ -118,6 +113,10 @@ public class BlackJackGame extends CardGame implements GambleGameInterface {
         for(CardPlayer cp : super.getPlayers()) {
             if(!(cp instanceof DealerPlayer)) {
                 BlackJackPlayer temp = (BlackJackPlayer) cp;
+                // check to see if they wanna try and play this game with no money bc WTF
+                if (temp.getWallet() == 0){
+                    Casino.invalidGambler();
+                }
                 int betValue;
                 do {
                     betValue = temp.promptPlayerFoMoney("How much do you wanna bet?");

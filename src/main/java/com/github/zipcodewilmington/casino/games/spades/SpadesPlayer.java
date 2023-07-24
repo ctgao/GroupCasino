@@ -51,7 +51,6 @@ public class SpadesPlayer extends CardPlayer {
         PlayingCard playerInput;
         do{     // keep getting a card until it's correct
             if (humanPlayer) {
-                this.printToConsole("");
                 printHand();
                 playerInput = humanChoice();
 
@@ -59,6 +58,11 @@ public class SpadesPlayer extends CardPlayer {
                     this.printToConsole("INVALID CHOICE!");
                 }
             } else {
+                try {       // let the user pretend that the computer is thinking
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
                 playerInput = computerChoice(winningSuit);
             }
         } while(!validateCard(winningSuit, playerInput, canPlaySpades));
@@ -103,13 +107,13 @@ public class SpadesPlayer extends CardPlayer {
         if(!getHandOfCards().contains(input)){
             return false;
         }
-        // check for no leading suit
-        if(winningSuit == null){
-            // check if you can play spades and if you can't, check if its a spades input
-            return !input.getSuit().equals(PlayingCardSuit.SPADES) || canPlaySpades;
-            // LOGICAL ERROR IS HERE
-            // FIRST PERSON CAN PLAY SPADES EVEN THO SPADES HAVEN'T BEEN BROKEN
-            // NEED TO RETHINK DOING THIS
+        if(winningSuit == null && canPlaySpades) {
+            // no leading suit and can play spades, means that any card is free game
+            return true;
+        }
+        else if(winningSuit == null && !canPlaySpades){
+            // no leading suit and can't play spades, check for spades
+            return !input.getSuit().equals(PlayingCardSuit.SPADES);
         }
         // check if you don't contain suit, and if you don't then check input for the suit
         return !getHandOfCards().containsSuit(winningSuit) || input.getSuit().equals(winningSuit);

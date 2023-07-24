@@ -22,6 +22,11 @@ public class DealerPlayer extends BlackJackPlayer {
 
     @Override
     public <String> String play() {
+        try {       // let the user pretend that the computer is thinking
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         // make the decision
         if(calculateScore() < 17){
             return (String) "HIT";

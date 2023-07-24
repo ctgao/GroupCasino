@@ -7,9 +7,6 @@ import com.github.zipcodewilmington.utils.IOConsole;
 import java.util.Scanner;
 
 public abstract class CardPlayer extends PlayerClass{
-    // for printing in pretty colors
-    final IOConsole redCards = new IOConsole(AnsiColor.RED);
-    final IOConsole blackCards = new IOConsole(AnsiColor.BLACK);
     final IOConsole whiteBG = new IOConsole(AnsiColor.WHITE_BACKGROUND);
     final IOConsole resetBG = new IOConsole(AnsiColor.AUTO);
     // var for meself
@@ -48,18 +45,15 @@ public abstract class CardPlayer extends PlayerClass{
         this.getPlayerInput().print("[");
 
         for(PlayingCard pc : curHand){
-            whiteBG.print("");
             if(noShowFirstCard){
+                whiteBG.print("");
                 this.getPlayerInput().print("HIDDEN");
                 noShowFirstCard = false;
-            }
-            else if(pc.getSuit().equals(PlayingCardSuit.DIAMONDS) || pc.getSuit().equals(PlayingCardSuit.HEARTS)){
-                redCards.print(pc.toString());
+                resetBG.print("");
             }
             else{
-                blackCards.print(pc.toString());
+                pc.printCardWithColor();
             }
-            resetBG.print("");
             if(curHand.indexOf(pc) != curHand.size() - 1) {
                 this.getPlayerInput().print(", ");
             }
