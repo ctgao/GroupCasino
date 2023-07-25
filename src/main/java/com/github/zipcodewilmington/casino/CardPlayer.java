@@ -1,11 +1,15 @@
 package com.github.zipcodewilmington.casino;
 
 import com.github.zipcodewilmington.casino.cardutils.*;
+import com.github.zipcodewilmington.utils.AnsiColor;
 import com.github.zipcodewilmington.utils.IOConsole;
 
 import java.util.Scanner;
 
 public abstract class CardPlayer extends PlayerClass{
+    final IOConsole whiteBG = new IOConsole(AnsiColor.WHITE_BACKGROUND);
+    final IOConsole resetBG = new IOConsole(AnsiColor.AUTO);
+    // var for meself
     HandOfCards curHand;
 
     // Constructor
@@ -32,15 +36,36 @@ public abstract class CardPlayer extends PlayerClass{
     }
 
     public void printHand(){
-        // not sure what to put here yet so i'll leave it empty for now
-        super.printToConsole(String.format("Your Hand: %s\n", curHand.toString()));
+        this.getPlayerInput().print("Your Hand: ");
+        printHand(false);
+    }
+
+    protected void printHand(boolean noShowFirstCard){
+        // WITH FORMATTING AND COLORS!!!
+        this.getPlayerInput().print("[");
+
+        for(PlayingCard pc : curHand){
+            if(noShowFirstCard){
+                whiteBG.print("");
+                this.getPlayerInput().print("HIDDEN");
+                noShowFirstCard = false;
+                resetBG.print("");
+            }
+            else{
+                pc.printCardWithColor();
+            }
+            if(curHand.indexOf(pc) != curHand.size() - 1) {
+                this.getPlayerInput().print(", ");
+            }
+        }
+        this.getPlayerInput().println("]");
     }
 
     public void clearHand(){
         curHand.clear();
     }
 
-    public PlayingCard promptForCard(String prompt){
+    protected PlayingCard promptForCard(String prompt){
         String response = super.promptPlayerForChoice(prompt);
         String[] cardPieces = response.toUpperCase().split(" ");
 
@@ -79,5 +104,5 @@ public abstract class CardPlayer extends PlayerClass{
     }
 
     // abstract functions here
-    public abstract void sortHand();
+    protected abstract void sortHand();
 }

@@ -17,11 +17,11 @@ public abstract class CardGame implements GameInterface{
         playerScores = new HashMap<>();
     }
 
-    public TheDeck getTheDeck() {
+    protected TheDeck getTheDeck() {
         return theDeck;
     }
 
-    public ArrayList<CardPlayer> getPlayers() {
+    protected ArrayList<CardPlayer> getPlayers() {
         return players;
     }
 
@@ -37,7 +37,7 @@ public abstract class CardGame implements GameInterface{
         playerScores.remove((CardPlayer) player);
     }
 
-    public void dealCards(int cardsForEach){
+    protected void dealCards(int cardsForEach){
         for(int i = 0; i < cardsForEach; i++){
             // each round of dealing
             for(CardPlayer cp : players){

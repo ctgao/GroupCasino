@@ -8,7 +8,7 @@ import com.github.zipcodewilmington.casino.cardutils.PlayingCard;
 import com.github.zipcodewilmington.casino.cardutils.PlayingCardValue;
 import com.github.zipcodewilmington.utils.IOConsole;
 
-public class BlackJackPlayer extends CardPlayer implements GamblerInterface {
+public class BlackJackPlayer extends CardPlayer implements GamblerInterface, Comparable<BlackJackPlayer> {
     private boolean stayOrNot;
 
     public BlackJackPlayer(CasinoAccount wallet, IOConsole console) {
@@ -26,17 +26,22 @@ public class BlackJackPlayer extends CardPlayer implements GamblerInterface {
         return stayOrNot;
     }
 
+    public void resetStay() {
+        stayOrNot = false;
+    }
+
     @Override
     public void sortHand() {
         // this does nothing because there's nothing to sort
     }
 
     @Override
-    public <SomeReturnType> String play() {
+    public <String> String play() {
         // now ask for input
-        String choice = promptPlayerForChoice("Would you like to get HIT or STAY?");
-        if(choice.toUpperCase().equals("HIT") || choice.toUpperCase().equals("STAY")) {
-            return choice.toUpperCase();
+        String choice = (String) promptPlayerForChoice("Would you like to get HIT or STAY?");
+        if (choice.toString().toUpperCase().equals("HIT") || choice.toString().toUpperCase().equals("STAY")) {
+            choice = (String) choice.toString().toUpperCase();
+            return choice;
         }
         throw new RuntimeException("Not a VALID BlackJack option. SHAME!");
     }
@@ -49,50 +54,45 @@ public class BlackJackPlayer extends CardPlayer implements GamblerInterface {
 
     @Override
     public boolean validBet(int bet) {
-
-        return this.getWallet() >= bet;
+        return this.getWallet() >= bet && this.getWallet() > 0;
     }
 
     @Override
     public void depositPayOut(int winnings) {
-
         this.getCasinoAccount().updateAccBalance(winnings);
     }
 
-    public void hitMe(PlayingCard pc){
+    public void hitMe(PlayingCard pc) {
         this.receiveCard(pc);
     }
 
-    public void stay(){
+    public void stay() {
         stayOrNot = true;
     }
 
-    public int calculateScore(){
+    public int calculateScore() {
         int result = 0;
         int aceCount = 0;
 
         // go through each of the cards in the hand
-        for(PlayingCard pc : getHandOfCards()){
-            if(isFaceCard(pc)){
+        for (PlayingCard pc : getHandOfCards()) {
+            if (isFaceCard(pc)) {
                 // face cards are worth 10
                 result += 10;
-            }
-            else if(!pc.getValue().equals(PlayingCardValue.ACE)){
+            } else if (!pc.getValue().equals(PlayingCardValue.ACE)) {
                 // not an ace
                 result += pc.getValue().getNumericalVal();
-            }
-            else{
+            } else {
                 aceCount++;
             }
         }
 
         // now deals with aces
-        for(int i = 0; i < aceCount; i++){
-            if(busted(result + 11)){
+        for (int i = 0; i < aceCount; i++) {
+            if (busted(result + 11)) {
                 // busted if you add 11 means you add 1
                 result += 1;
-            }
-            else{
+            } else {
                 result += 11;
             }
         }
@@ -109,12 +109,37 @@ public class BlackJackPlayer extends CardPlayer implements GamblerInterface {
     }
 
     // face cards are J, Q, K
-    private boolean isFaceCard(PlayingCard pc){
+    private boolean isFaceCard(PlayingCard pc) {
         PlayingCardValue val = pc.getValue();
         return (val.equals(PlayingCardValue.JACK) || val.equals(PlayingCardValue.QUEEN) || val.equals(PlayingCardValue.KING));
     }
 
     public String getBustedStatement() {
-        return "YOU BUSTED! RIP";
+        return "YOU BUSTED! RIP\n";
+    }
+
+    /*
+     * player busted = earn nothing gg
+     * dealer busted but player didn't bust = good job bruh
+     * dealer not busted but greater than player not busted = dealer win
+     * -1 == dealer wins, 0 == issa tie, 1 == player wins
+     */
+    @Override
+    public int compareTo(BlackJackPlayer o) {
+        DealerPlayer dealer = (DealerPlayer) o;
+
+        if (this.isHandBusted()) {
+            return -1;
+        }
+        // check for wining conditions
+        if (dealer.isHandBusted()) {
+            return 1;
+        } else if (dealer.calculateScore() > this.calculateScore()) {
+            return -1;
+        } else if (dealer.calculateScore() == this.calculateScore()) {
+            return 0;
+        } else {
+            return 1;
+        }
     }
 }

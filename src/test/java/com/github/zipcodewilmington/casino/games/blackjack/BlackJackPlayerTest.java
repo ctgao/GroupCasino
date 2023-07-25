@@ -11,6 +11,111 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BlackJackPlayerTest {
+    @Test
+    void compareToTest(){
+        //Given
+        int expected = 0;
+        HandOfCards hand = new HandOfCards();
+        hand.add(new PlayingCard(PlayingCardSuit.SPADES, PlayingCardValue.KING));
+        hand.add(new PlayingCard(PlayingCardSuit.HEARTS, PlayingCardValue.KING));
+        //Given
+        BlackJackPlayer player = new BlackJackPlayer(hand);
+        DealerPlayer dealer = new DealerPlayer(hand);
+        //When
+        int actual = player.compareTo(dealer);
+        //Then
+        assertEquals(expected, actual);
+    }
+    @Test
+    void compareToTest1(){
+        //Given
+        int expected = -1;
+        HandOfCards hand = new HandOfCards();
+        hand.add(new PlayingCard(PlayingCardSuit.SPADES, PlayingCardValue.KING));
+        hand.add(new PlayingCard(PlayingCardSuit.HEARTS, PlayingCardValue.KING));
+        HandOfCards dealerHand = new HandOfCards();
+        hand.add(new PlayingCard(PlayingCardSuit.SPADES, PlayingCardValue.ACE));
+        hand.add(new PlayingCard(PlayingCardSuit.HEARTS, PlayingCardValue.QUEEN));
+        //Given
+        BlackJackPlayer player = new BlackJackPlayer(hand);
+        DealerPlayer dealer = new DealerPlayer(dealerHand);
+        //When
+        int actual = player.compareTo(dealer);
+        //Then
+        assertEquals(expected, actual);
+    }
+    @Test
+    void compareToTest2(){
+        //Given
+        int expected = -1;
+        HandOfCards hand = new HandOfCards();
+        hand.add(new PlayingCard(PlayingCardSuit.SPADES, PlayingCardValue.KING));
+        hand.add(new PlayingCard(PlayingCardSuit.HEARTS, PlayingCardValue.THREE));
+        HandOfCards dealerHand = new HandOfCards();
+        dealerHand.add(new PlayingCard(PlayingCardSuit.SPADES, PlayingCardValue.ACE));
+        dealerHand.add(new PlayingCard(PlayingCardSuit.HEARTS, PlayingCardValue.QUEEN));
+        //Given
+        BlackJackPlayer player = new BlackJackPlayer(hand);
+        DealerPlayer dealer = new DealerPlayer(dealerHand);
+        //When
+        int actual = player.compareTo(dealer);
+        //Then
+        assertEquals(expected, actual);
+    }
+    @Test
+    void compareToTest3(){
+        //Given
+        int expected = -1;
+        HandOfCards busted = new HandOfCards();
+        busted.add(new PlayingCard(PlayingCardSuit.SPADES, PlayingCardValue.KING));
+        busted.add(new PlayingCard(PlayingCardSuit.SPADES, PlayingCardValue.KING));
+        busted.add(new PlayingCard(PlayingCardSuit.HEARTS, PlayingCardValue.THREE));
+        HandOfCards dealerHand = new HandOfCards();
+        dealerHand.add(new PlayingCard(PlayingCardSuit.SPADES, PlayingCardValue.ACE));
+        dealerHand.add(new PlayingCard(PlayingCardSuit.HEARTS, PlayingCardValue.QUEEN));
+        //Given
+        BlackJackPlayer player = new BlackJackPlayer(busted);
+        DealerPlayer dealer = new DealerPlayer(dealerHand);
+        //When
+        int actual = player.compareTo(dealer);
+        //Then
+        assertEquals(expected, actual);
+    }
+    @Test
+    void compareToTest4(){
+        //Given
+        int expected = -1;
+        HandOfCards busted = new HandOfCards();
+        busted.add(new PlayingCard(PlayingCardSuit.SPADES, PlayingCardValue.KING));
+        busted.add(new PlayingCard(PlayingCardSuit.SPADES, PlayingCardValue.KING));
+        busted.add(new PlayingCard(PlayingCardSuit.HEARTS, PlayingCardValue.THREE));
+        //Given
+        BlackJackPlayer player = new BlackJackPlayer(busted);
+        DealerPlayer dealer = new DealerPlayer(busted);
+        //When
+        int actual = player.compareTo(dealer);
+        //Then
+        assertEquals(expected, actual);
+    }
+    @Test
+    void compareToTest5(){
+        //Given
+        int expected = 1;
+        HandOfCards hand = new HandOfCards();
+        hand.add(new PlayingCard(PlayingCardSuit.SPADES, PlayingCardValue.ACE));
+        hand.add(new PlayingCard(PlayingCardSuit.HEARTS, PlayingCardValue.QUEEN));
+        HandOfCards busted = new HandOfCards();
+        busted.add(new PlayingCard(PlayingCardSuit.SPADES, PlayingCardValue.KING));
+        busted.add(new PlayingCard(PlayingCardSuit.SPADES, PlayingCardValue.KING));
+        busted.add(new PlayingCard(PlayingCardSuit.HEARTS, PlayingCardValue.THREE));
+        //Given
+        BlackJackPlayer player = new BlackJackPlayer(hand);
+        DealerPlayer dealer = new DealerPlayer(busted);
+        //When
+        int actual = player.compareTo(dealer);
+        //Then
+        assertEquals(expected, actual);
+    }
 
     @Test
     void isStayOrNotTest() {
@@ -65,10 +170,6 @@ class BlackJackPlayerTest {
         boolean actual = player.validBet(100);
         // Then
         assertEquals(true, actual);
-    }
-
-    @Test
-    void depositPayOut() {
     }
 
     @Test
