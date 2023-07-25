@@ -53,18 +53,107 @@ class RouletteTableTest {
 
     }
     @Test
-    void enumCorrelationTest3() {
+    public void enumZeroCorrelationTest() {
 
         //Given
-        int thirteen = RouletteNumParam.thirteen.blackOrRed;
+        int thirteen = RouletteNumParam.zero.oddOrEven;
 
         //When
-        int expectedBlackOrRed = 1;
-        int actualBlackOrRed = thirteen;
+        int expectedOddOrEven = 100;
+        int actualOddOrEven = thirteen;
 
         //Then
-        Assert.assertEquals(expectedBlackOrRed, actualBlackOrRed);
+        System.out.println(thirteen);
+        Assert.assertEquals(expectedOddOrEven, actualOddOrEven);
 
+
+    }
+
+    @Test
+    public void payOutCalcTest() {
+        //Given
+        RouletteGame roulGame = new RouletteGame();
+        int betAmount = 50;
+        int payOutMult = 4;
+
+        //When
+        int expectedWinnings = 250;
+                //You win your bet TIMES the mult AND get your bet back
+        int actualWinnings = roulGame.payOutCalc(betAmount, payOutMult);
+
+        //Then
+        Assert.assertEquals(expectedWinnings, actualWinnings);
+
+    }
+
+    @Test
+    public void winBetTest1() {
+        //Given
+        RouletteGame roullGame = new RouletteGame();
+        int bet = 5;
+        int betParam = 8;
+
+        //When
+
+        //Then
+        Assert.assertFalse(roullGame.winBet(bet, betParam));
+    }
+    @Test
+    public void winBetTest2() {
+        //Given
+        RouletteGame roullGame = new RouletteGame();
+        int bet2 = 10;
+        int betParam2 = 10;
+
+        //When
+
+        //Then
+        Assert.assertTrue(roullGame.winBet(bet2, betParam2));
+    }
+    @Test
+    public void winBetZeroTest() {
+        //Given
+        RouletteGame roullGame = new RouletteGame();
+        int bet2 = 0;
+        int betParam2 = 0;
+
+        //When
+
+        //Then
+        Assert.assertTrue(roullGame.winBet(bet2, betParam2));
+    }
+
+    @Test
+    public void isEndConditionTrueTest() {
+        //Given
+        RouletteGame rGame = new RouletteGame();
+
+        //When
+        rGame.setChoice(2);
+
+        //Then
+        Assert.assertTrue(rGame.isEndCondition());
+    }
+    @Test
+    public void isEndConditionFalseTest() {
+        //Given
+        RouletteGame rGame2 = new RouletteGame();
+
+        //When
+        rGame2.setChoice(1);
+
+        //Then
+        Assert.assertFalse(rGame2.isEndCondition());
+    }
+
+    @Test
+    public void bettingOnNumTest() {
+        //Given
+        RouletteGame rGame3 = new RouletteGame();
+
+        //When
+
+        //Then
     }
 
 

@@ -24,7 +24,7 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
 
     int numberGuessMult = 35;
     int oddOrEvenMult = 2;
-    int choice = 1;
+    int choice = 2;
 
 
     @Override
@@ -40,7 +40,7 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
     @Override
     public void run() {
 
-        while (!isEndCondition()) {
+        while (isEndCondition()) {
             int betSelection = 0;
 
             //what would you like to bet on
@@ -50,10 +50,21 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
 
             betSelection = roulettePlayer.promptPlayerFoMoney("");
 
+            if (betSelection != 1 && betSelection != 2) {
+                gameMaster.println("Invalid Response \n Please Try Again\n");
+                run();
+            }
+
+
             if (betSelection == 1) {
 
-                //bet on the number
-                bettingOnNumber();
+                int betRouletteNum = roulettePlayer.promptPlayerFoMoney("What number would you like to bet on?");
+                if (betRouletteNum < 0 || betRouletteNum > 36) {
+                    gameMaster.println("Invalid Selection\n Please Try Again \n");
+                    run();
+                } else {
+                    bettingOnNumber(betRouletteNum);
+                }
 
             } else if (betSelection == 2) {
 
@@ -101,8 +112,11 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
 
             }
 
+
+
             int betAmount = roulettePlayer.promptPlayerFoMoney("How much would you like to bet?");
 
+            System.out.println("Inside Run");
             //Confirm the bet is a valid bet
 
             RouletteTable rt = new RouletteTable();
@@ -183,6 +197,8 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
 
     }
 
+    //exit to menu
+
     public String printWinningParam(RouletteNumParam winningNum) {
         StringBuilder winner = new StringBuilder();
 
@@ -233,10 +249,12 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
         return winner.toString();
     }
 
-    public void bettingOnNumber(){
-        int betRouletteNum = roulettePlayer.promptPlayerFoMoney("What number would you like to bet on?");
+    public int bettingOnNumber(int betRouletteNum){
+       int bettingNum = betRouletteNum;
 
         int betAmount = roulettePlayer.promptPlayerFoMoney("How much would you like to bet?");
+        System.out.println("Betting on number");
+
 
         RouletteTable rt = new RouletteTable();
         RouletteNumParam winningNum = rt.throwBall();
@@ -251,9 +269,9 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
                 tryAgain();
             }
         }
+        return bettingNum;
     }
 
-    public void showWinningCondition() {}
 
     public void printLoser() {
         gameMaster.println("Ouch You Lose \n");
@@ -266,11 +284,11 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
         if (again == 1) {
             run();
         } else if (again == 2) {
-            choice = 2;
-        }
+            choice = 0;
+
+        } else tryAgain();
+
     }
-
-
 
 
     public String insideBetting() {
@@ -357,14 +375,14 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
         }
         return false;
     }
-    public void endGame(){
-
-    }
 
     @Override
     public int payOutCalc(int betAmount, int payOutMult) {
         int winnings = betAmount + (betAmount * payOutMult);
         gameMaster.println(" Your Winnings Of: \n$" + winnings + "\nHas Been Transferred To Your Account ");
         return winnings;
+    }
+    public void setChoice(int choice) {
+        this.choice = choice;
     }
 }
