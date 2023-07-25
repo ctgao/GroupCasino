@@ -55,7 +55,7 @@ public class SpadesPlayer extends CardPlayer {
                 playerInput = humanChoice();
 
                 if(!validateCard(winningSuit, playerInput, canPlaySpades)){
-                    this.printToConsole("INVALID CHOICE!");
+                    this.printToConsole("INVALID CHOICE!\n");
                 }
             } else {
                 try {       // let the user pretend that the computer is thinking

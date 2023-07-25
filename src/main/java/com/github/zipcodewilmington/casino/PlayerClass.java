@@ -75,7 +75,7 @@ public abstract class PlayerClass implements PlayerInterface {
 
     public boolean promptPlayerToPlayAgain(String prompt) {
         String choice = promptPlayerForChoice(prompt);
-        if (choice.toUpperCase().contains("YES")) {
+        if (choice.toUpperCase().contains("Y")) {
             return true;
         } else {
             return false;

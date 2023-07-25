@@ -1,5 +1,6 @@
 package com.github.zipcodewilmington.casino.games.blackjack;
 
+import com.github.zipcodewilmington.casino.cardutils.HandOfCards;
 import com.github.zipcodewilmington.casino.cardutils.PlayingCard;
 import com.github.zipcodewilmington.utils.AnsiColor;
 import com.github.zipcodewilmington.utils.IOConsole;
@@ -9,6 +10,11 @@ public class DealerPlayer extends BlackJackPlayer {
 
     public DealerPlayer() {
         super(null, new IOConsole(AnsiColor.PURPLE));
+        showFirstCard = false;
+    }
+
+    public DealerPlayer(HandOfCards hand) {
+        super(hand);
         showFirstCard = false;
     }
 

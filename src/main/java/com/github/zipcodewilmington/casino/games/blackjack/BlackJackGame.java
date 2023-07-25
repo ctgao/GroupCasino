@@ -59,7 +59,7 @@ public class BlackJackGame extends CardGame implements GambleGameInterface {
         for(CardPlayer cp : super.getPlayers()) {
             if(!(cp instanceof DealerPlayer)) {
                 BlackJackPlayer player = (BlackJackPlayer) cp;
-                return player.promptPlayerToPlayAgain("Wanna try your luck once more?");
+                return player.promptPlayerToPlayAgain("Wanna try your luck once more? (yes/no)");
             }
         }
         return false;
@@ -135,18 +135,18 @@ public class BlackJackGame extends CardGame implements GambleGameInterface {
     }
 
     private void decideWhoWinsAndPayThem() {
-        // find the dealer's score
-        boolean busted = dealer.isHandBusted();
-        int dealerScore = dealer.calculateScore();
-
+        // iterate through each non dealer player
         for(CardPlayer cp : super.getPlayers()) {
             if(!(cp instanceof DealerPlayer)) {
                 BlackJackPlayer temp = (BlackJackPlayer) cp;
                 // now calculate funds
-                int betAmount = beatDealer(busted, dealerScore, temp) ? betAmounts.get(temp) : 0;
-                int payout = payOutCalc(betAmount);
+                int comparison = temp.compareTo(dealer) + 1;
+                int payout = payOutCalc(betAmounts.get(temp), comparison);
                 // NOW TELL THE PLAYER
-                if(payout != 0) {
+                if(comparison == 1){
+                    blackjackMenu.println("Dealer pushed the bet back to you");
+                }
+                else if(payout != 0) {
                     blackjackMenu.println("WINNER WINNER, CHICKEN DINNER!\n");
                 }
                 else{
@@ -155,31 +155,6 @@ public class BlackJackGame extends CardGame implements GambleGameInterface {
                 temp.depositPayOut(payout);
                 // also remove funds from the house account
                 HouseAccount.getHouseAccount().payout(payout);
-            }
-        }
-    }
-
-    /*
-     * player busted = earn nothing gg
-     * dealer busted but player didn't bust = good job bruh
-     * dealer not busted but greater than player not busted = dealer win
-     */
-    public boolean beatDealer(boolean dealerBusted, int dealerScore, BlackJackPlayer player){
-        // get the player's score
-        int playerScore = player.calculateScore();
-
-        if(player.isHandBusted()){
-            return false;
-        }
-        else{
-            if(dealerBusted){
-                return true;
-            }
-            else if (dealerScore > playerScore) {
-                return false;
-            }
-            else{
-                return true;
             }
         }
     }
@@ -196,9 +171,6 @@ public class BlackJackGame extends CardGame implements GambleGameInterface {
         return false;
     }
 
-    public int payOutCalc(int betAmount) {
-        return payOutCalc(betAmount, 2);
-    }
     @Override
     public int payOutCalc(int betAmount, int payOutMult) {
         return betAmount * payOutMult;

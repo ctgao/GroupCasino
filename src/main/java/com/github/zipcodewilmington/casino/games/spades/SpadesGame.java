@@ -92,6 +92,7 @@ public class SpadesGame extends CardGame {
         spadesGame.println("The leading suit (first suit played) or Spades will always determine the winner!");
         spadesGame.println("Good luck!\n");
     }
+
     private void setUp() {
         // see how many users are playing - should be 4
         while(getPlayers().size() < 4){
@@ -194,7 +195,7 @@ public class SpadesGame extends CardGame {
         }
         else{
             spadesGame.println("A computer player won over you.");
-            new IOConsole(AnsiColor.YELLOW).print("Wah wah wah wah-oh-wah");
+            new IOConsole(AnsiColor.YELLOW).println("Wah wah wah wah-oh-wah\n");
         }
         distributeWins(youWon);
     }
