@@ -57,8 +57,8 @@ public class PlayingCard implements Comparable<PlayingCard>{
     }
     // BIG NOTE : SHOULD I MAKE A COMPARATOR SO THE PLAYING CARDS CAN BE SORTED IN DIFFERENT WAYS?
     // NOT SURE YET - BUT ITS AN IDEA - GoFish and Spades hands are going to be sorted differently
-    public int compareValue(PlayingCard otherCard){
-        return this.value.compareTo(otherCard.getValue());
+    public int compareValue(PlayingCardValue otherCard){
+        return this.value.compareTo(otherCard);
     }
 
     //for printing cards out in pretty pretty colors
