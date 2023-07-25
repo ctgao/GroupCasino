@@ -28,6 +28,7 @@ public class Casino implements Runnable {
     public void run() {
         String arcadeDashBoardInput;
         CasinoAccountManager casinoAccountManager = new CasinoAccountManager();
+        casinoAccountManager.readAccounts();
         do {
             arcadeDashBoardInput = getArcadeDashboardInput();
             if ("select-game".equals(arcadeDashBoardInput)) {
@@ -69,6 +70,7 @@ public class Casino implements Runnable {
             }
 //            clearScreen();
         } while (!"logout".equals(arcadeDashBoardInput));
+        casinoAccountManager.saveAccounts();
     }
 
     private String getArcadeDashboardInput() {
