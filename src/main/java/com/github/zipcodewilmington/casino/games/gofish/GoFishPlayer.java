@@ -117,7 +117,10 @@ public class GoFishPlayer extends CardPlayer {
     }
 
     @Override
-    public <SomeReturnType> SomeReturnType play() {
-        return null;
+    public <PlayingCardValue> PlayingCardValue play() {
+
+        PlayingCardValue question = (PlayingCardValue) promptForCardValue("What card do you want to ask for?");
+
+        return question;
     }
 }
