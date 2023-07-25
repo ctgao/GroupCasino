@@ -4,16 +4,17 @@ import com.github.zipcodewilmington.casino.GambleGameInterface;
 import com.github.zipcodewilmington.casino.GameInterface;
 import com.github.zipcodewilmington.casino.PlayerClass;
 import com.github.zipcodewilmington.casino.PlayerInterface;
+import com.github.zipcodewilmington.utils.AnsiColor;
 import com.github.zipcodewilmington.utils.IOConsole;
 
 import java.util.Scanner;
 
 public class RouletteGame implements GameInterface, GambleGameInterface {
 
-    Scanner input = new Scanner(System.in);
+    private final IOConsole gameMaster = new IOConsole(AnsiColor.RED);
     private double payOutMult;
     private RouletteTable table;
-    private PlayerInterface roulettePlayer;
+    private RoulettePlayer roulettePlayer;
    // private RoulettePlayer player = new RoulettePlayer(roulettePlayer.getCasinoAccount(), new IOConsole());
     private int ballCurrentNum;
 
@@ -36,30 +37,33 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
 
     @Override
     public void add(PlayerInterface player) {
-        roulettePlayer = player;
+        roulettePlayer = (RoulettePlayer) player;
     }
 
     @Override
     public void remove(PlayerInterface player) {
-
+        roulettePlayer = null;
     }
 
     @Override
     public void run() {
 
+        //Note To Self: Don't Use Blue or Green
+
         // ***************** Replace Scanners With Player Input ***************
 
         //give menu
-        add(roulettePlayer);
+
 
         while (choice != 1) {
 
 
             //what would you like to bet on
-            System.out.printf("Hello, welcome to the Roulette Table     \n" +
-                    "What kind of bet would you like to make? \n" +
-                    "1. Bet On Number           2. Inside Bet \n");
-            int betSelection = input.nextInt();
+            gameMaster.println("Hello, welcome to the Roulette Table     \n" +
+                                    "What kind of bet would you like to make? \n" +
+                                    "1. Bet On Number           2. Inside Bet \n");
+
+            int betSelection = roulettePlayer.promptPlayerFoMoney("");
 
             if (betSelection == 1) {
 
@@ -79,10 +83,10 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
                         betOddOrEven = 2;
                         break;
                     case "black":
-                            betBlackOrRed = 1;
+                        betBlackOrRed = 1;
                         break;
                     case "red":
-                            betBlackOrRed = 2;
+                        betBlackOrRed = 2;
                         break;
                     case "high":
                         betHighOrLow = 1;
@@ -112,19 +116,16 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
 
             }
 
-            betRouletteNum = input.nextInt();
+            int betAmount = roulettePlayer.promptPlayerFoMoney("How much would you like to bet?");
 
-            System.out.printf("How much would you like to bet? \n");
-
-            int betAmount = input.nextInt();
-
-//            if (!player.validBet(betAmount)) {
-//                System.out.println("You Can't Do That");
-//                death;
-//            }
+            //Confirm the bet is a valid bet
 
             RouletteTable rt = new RouletteTable();
             RouletteNumParam winningNum = rt.throwBall();
+
+            gameMaster.println("And The Winning Number Is: \n"
+                                    + winningNum.toString());
+
 
             //Betting on Number
             if (betRouletteNum > -1) {
@@ -179,26 +180,26 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
             }
 
         }
+
     }
 
 
+    public void showWinningCondition() {}
+
     public void tryAgain() {
-        System.out.printf("You Lose   \n" +
+        choice = roulettePlayer.promptPlayerFoMoney("You Lose   \n" +
                 "Try again? \n" +
                 "1. Yes     \n" +
                 "2. No        ");
-        choice = input.nextInt();
         if (choice == 1) {
             run();
         }
     }
 
     public void bettingOnNumber(){
-        System.out.println("What number would you like to bet on?");
-        int betRouletteNum = input.nextInt();
+        int betRouletteNum = roulettePlayer.promptPlayerFoMoney("What number would you like to bet on?");
 
-        System.out.printf("How much would you like to bet? \n");
-        int betAmount = input.nextInt();
+        int betAmount = roulettePlayer.promptPlayerFoMoney("How much would you like to bet?");
 
         RouletteTable rt = new RouletteTable();
         RouletteNumParam winningNum = rt.throwBall();
@@ -208,11 +209,10 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
                 printWinner();
                 payOutCalc(betAmount, numberGuessMult);
             } else {
-                System.out.printf("You Lose   \n" +
+                int choice = roulettePlayer.promptPlayerFoMoney("You Lose   \n" +
                         "Try again? \n" +
                         "1. Yes     \n" +
                         "2. No        ");
-                int choice = input.nextInt();
                 if (choice == 1) {
                     run();
                 }
@@ -221,55 +221,50 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
 
     }
 
-
     public String insideBetting() {
 
         StringBuilder insideFinalBet = new StringBuilder();
 
-        System.out.printf("Which inside bet would you like? \n" +
+        int insideChoice = roulettePlayer.promptPlayerFoMoney("Which inside bet would you like? \n" +
                 "1. Odd or Even    \n" +
                 "2. Black or Red   \n" +
                 "3. High or Low    \n" +
                 "4. Which Dozen    \n" +
                 "5. Which Column   \n");
 
-        int insideChoice = input.nextInt();
 
         //setting up int to check against roulette number enums
         switch (insideChoice) {
             case 1:
-                System.out.println("Would you like to bet Odd or Even? \n" +
-                        "1. Odd \n" +
-                        "2. Even");
-                betOddOrEven = input.nextInt();
+                betOddOrEven = roulettePlayer.promptPlayerFoMoney("Would you like to bet Odd or Even? \n" +
+                                                                  "1. Odd \n" +
+                                                                  "2. Even");
+
                 if (betOddOrEven == 1) {
                     insideFinalBet.append("odd");
                 } else insideFinalBet.append("even");
                 break;
             case 2:
-                System.out.println("Would you like to bet Black or Red? \n" +
-                        "1. Black \n" +
-                        "2. Red");
-                betBlackOrRed = input.nextInt();
+                betBlackOrRed = roulettePlayer.promptPlayerFoMoney("Would you like to bet Black or Red? \n" +
+                                                        "1. Black \n" +
+                                                        "2. Red");
                 if (betBlackOrRed == 1) {
                     insideFinalBet.append("black");
                 } else insideFinalBet.append("red");
                 break;
             case 3:
-                System.out.println("Would you like to bet High or Low? \n" +
-                        "1. High \n" +
-                        "2. Low");
-                betHighOrLow = input.nextInt();
+                betHighOrLow = roulettePlayer.promptPlayerFoMoney("Would you like to bet High or Low? \n" +
+                                                                  "1. High \n" +
+                                                                  "2. Low");
                 if (betHighOrLow == 1) {
                     insideFinalBet.append("high");
                 } else insideFinalBet.append("low");
                 break;
             case 4:
-                System.out.println("Would Dozen would you like to bet on? \n" +
+                betWhichDoz = roulettePlayer.promptPlayerFoMoney("Would Dozen would you like to bet on? \n" +
                         "1. One \n" +
                         "2. Two \n" +
                         "3. Three ");
-                betWhichDoz = input.nextInt();
                 if (betWhichDoz == 1) {
                     insideFinalBet.append("dozen one");
                 } else if (betWhichDoz == 2) {
@@ -277,11 +272,10 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
                 } else insideFinalBet.append("dozen three");
                 break;
             case 5:
-                System.out.println("Which Column would you like to bet on? \n" +
+                betWhichColumn = roulettePlayer.promptPlayerFoMoney("Which Column would you like to bet on? \n" +
                         "1. One \n" +
                         "2. Two \n" +
                         "3. Three ");
-                betWhichColumn = input.nextInt();
                 if (betWhichColumn == 1) {
                     insideFinalBet.append("column one");
                 } else if (betWhichColumn == 2) {

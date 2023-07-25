@@ -66,7 +66,6 @@ public abstract class PlayerClass implements PlayerInterface {
 
     public String promptPlayerForChoice(String promptChoiceString) {
         String playerAnswer = playerInput.getStringInput(promptChoiceString);
-
         return playerAnswer;
     }
 

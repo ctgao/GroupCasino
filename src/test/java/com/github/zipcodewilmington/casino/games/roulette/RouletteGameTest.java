@@ -15,7 +15,7 @@ class RouletteGameTest {
         String expectedBetType = "highOrLow";
 
         //When
-        int expectedValue = 2;
+        int expectedValue = 1;
         int actualValue = 0;
 
         switch(expectedBetType) {
