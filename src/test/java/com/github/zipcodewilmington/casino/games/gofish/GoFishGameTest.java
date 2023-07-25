@@ -9,24 +9,12 @@ class GoFishGameTest {
     @Test
     void checkHandForCard() {
 
-
     }
 
     @Test
     void checkWinner() {
     }
 
-    @Test
-    void printGoFish() {
-    }
-
-    @Test
-    void run() {
-    }
-
-    @Test
-    void printWinner() {
-    }
 
     @Test
     void isEndCondition() {
