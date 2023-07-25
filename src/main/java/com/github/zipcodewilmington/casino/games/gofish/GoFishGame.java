@@ -62,7 +62,7 @@ public class GoFishGame extends CardGame {
     private void playertakesturn(GoFishPlayer player1, GoFishPlayer player2) {
         PlayingCardValue aMove = player1.play();
 
-        if (player2.hasCard(aMove)){
+        if (checkHandForCard(player2, aMove)){
 
             PlayingCard[] gotcha = player2.askForCard(aMove);
 
@@ -75,6 +75,7 @@ public class GoFishGame extends CardGame {
         }
         if (player1.fourOfAKind()!= null){
             player1.remove4(player1.fourOfAKind());
+            player1.IncrementBooks();
         }
     }
 

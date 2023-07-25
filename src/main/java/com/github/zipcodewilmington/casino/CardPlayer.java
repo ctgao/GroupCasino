@@ -1,5 +1,6 @@
 package com.github.zipcodewilmington.casino;
 
+import com.github.zipcodewilmington.Casino;
 import com.github.zipcodewilmington.casino.cardutils.*;
 import com.github.zipcodewilmington.utils.AnsiColor;
 import com.github.zipcodewilmington.utils.IOConsole;
@@ -77,6 +78,28 @@ public abstract class CardPlayer extends PlayerClass{
             return null;
         }
         return new PlayingCard(pcs, pcv);
+    }
+
+    protected PlayingCardValue promptForCardValue(String prompt){
+        String response = super.promptPlayerForChoice(prompt);
+
+        PlayingCardValue pcv = parseCardValue(response);
+
+        if(pcv == null){
+            Casino.errorMessage.println("invalid card");
+
+            return promptForCardValue(prompt);
+        }
+        return pcv;
+    }
+
+    private PlayingCardValue parseCardValue(String response) {
+        for (PlayingCardValue value : PlayingCardValue.values()) {
+            if (response.equals(value.toString())) {
+                return value;
+            }
+        }
+        return null;
     }
 
     private PlayingCardSuit parseCardSuit(String[] cardPieces) {
