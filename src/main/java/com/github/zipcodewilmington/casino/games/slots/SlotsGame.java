@@ -46,7 +46,7 @@ public class SlotsGame implements GambleGameInterface, GameInterface {
                         //playerOfSlots.printToConsole(startGameString);
                          }
                     else  {
-                        playerOfSlots.printToConsole("You dont have money anymore");
+                        playerOfSlots.printToConsole("You don't have money anymore");
                         return;
                     }
                 }
@@ -54,7 +54,7 @@ public class SlotsGame implements GambleGameInterface, GameInterface {
                 machineSpin();
                 checkingWinningCondition(resultOfSpin);
                 // to pay player for game
-            int wonResult = payOutCalc(bet,resultOfSpin);
+            int wonResult = payOutCalc(bet,resultOfSpin-2);
             playerOfSlots.depositPayOut(wonResult);
             String seeAcc = playerOfSlots.promptPlayerForChoice(answerToSeeAccount);
             if (seeAcc.equalsIgnoreCase("yes")) {
@@ -114,7 +114,7 @@ public class SlotsGame implements GambleGameInterface, GameInterface {
 
     public boolean checkingWinningCondition (Integer resultOfSpin) {
         if (resultOfSpin >= 4 && resultOfSpin <= 5 ) {
-            System.out.println("Congratulations! Your numbers match!!! YOUR  multiplier IS " + resultOfSpin);
+            System.out.println("Congratulations! Your numbers match!!! YOUR  multiplier IS " + (resultOfSpin-2));
             return true;
         }
         else {System.out.println("Sorry, the numbers do not match.");
