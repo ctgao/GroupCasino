@@ -20,7 +20,7 @@ import com.github.zipcodewilmington.utils.IOConsole;
  */
 public class Casino implements Runnable {
     private final IOConsole console = new IOConsole(AnsiColor.BLUE);
-    private static final IOConsole errorMessage = new IOConsole(AnsiColor.YELLOW);
+    public static final IOConsole errorMessage = new IOConsole(AnsiColor.YELLOW);
 
     @Override
     public void run() {

@@ -144,7 +144,7 @@ public class BlackJackGame extends CardGame implements GambleGameInterface {
                 int payout = payOutCalc(betAmounts.get(temp), comparison);
                 // NOW TELL THE PLAYER
                 if(comparison == 1){
-                    blackjackMenu.println("Dealer pushed the bet back to you");
+                    blackjackMenu.println("Dealer pushed the bet back to you\n");
                 }
                 else if(payout != 0) {
                     blackjackMenu.println("WINNER WINNER, CHICKEN DINNER!\n");
