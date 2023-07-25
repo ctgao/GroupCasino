@@ -15,12 +15,15 @@ public class GoFishPlayer extends CardPlayer {
         super(wallet, console);
     }
 
-    public boolean hasCard(PlayingCardValue card){
+    public boolean hasCard(PlayingCardValue cardValue){
 
-        return true;
+        if (getHandOfCards().contains(cardValue)){
+            return true;
+        }
+        return false;
     }
 
-    public PlayingCard[] askForCard(PlayingCardValue card){
+    public PlayingCard[] askForCard(PlayingCardValue cardValue){
 
         return null;
     }
@@ -31,6 +34,7 @@ public class GoFishPlayer extends CardPlayer {
     }
 
     public void remove4(PlayingCardValue card){
+
 
 
     }
