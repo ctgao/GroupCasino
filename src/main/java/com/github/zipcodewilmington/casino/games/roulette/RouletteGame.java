@@ -11,17 +11,10 @@ import java.util.Scanner;
 
 public class RouletteGame implements GameInterface, GambleGameInterface {
 
-    private final IOConsole gameMaster = new IOConsole(AnsiColor.RED);
-    private double payOutMult;
+    private final IOConsole gameMaster = new IOConsole(AnsiColor.PURPLE);
     private RouletteTable table;
     private RoulettePlayer roulettePlayer;
-   // private RoulettePlayer player = new RoulettePlayer(roulettePlayer.getCasinoAccount(), new IOConsole());
-    private int ballCurrentNum;
-
-    //RoulettePlayer player = new RoulettePlayer();
     int betRouletteNum = -1;
-    int insideBetSelection = 0;
-    //1. oddOrEven   2. blackOrRed   3. highOrLow   4. whichDoz   5. whichColumn
 
     int betOddOrEven = 0;
     int betBlackOrRed = 0;
@@ -29,10 +22,9 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
     int betWhichDoz = 0;
     int betWhichColumn = 0;
 
-    //Payout Multiplier
     int numberGuessMult = 35;
     int oddOrEvenMult = 2;
-    int choice = 0;
+    int choice = 1;
 
 
     @Override
@@ -48,22 +40,15 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
     @Override
     public void run() {
 
-        //Note To Self: Don't Use Blue or Green
-
-        // ***************** Replace Scanners With Player Input ***************
-
-        //give menu
-
-
-        while (choice != 1) {
-
+        while (!isEndCondition()) {
+            int betSelection = 0;
 
             //what would you like to bet on
             gameMaster.println("Hello, welcome to the Roulette Table     \n" +
                                     "What kind of bet would you like to make? \n" +
                                     "1. Bet On Number           2. Inside Bet \n");
 
-            int betSelection = roulettePlayer.promptPlayerFoMoney("");
+            betSelection = roulettePlayer.promptPlayerFoMoney("");
 
             if (betSelection == 1) {
 
@@ -122,9 +107,8 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
 
             RouletteTable rt = new RouletteTable();
             RouletteNumParam winningNum = rt.throwBall();
+            printWinningParam(winningNum);
 
-            gameMaster.println("And The Winning Number Is: \n"
-                                    + winningNum.toString());
 
 
             //Betting on Number
@@ -132,7 +116,9 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
                 if (winBet(betRouletteNum, winningNum.rouletteNum)) {
                     printWinner();
                     payOutCalc(betAmount, numberGuessMult);
+                    tryAgain();
                 } else {
+                    printLoser();
                     tryAgain();
                 }
             }
@@ -142,7 +128,10 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
                 if (winBet(betOddOrEven, winningNum.oddOrEven)) {
                     printWinner();
                     payOutCalc(betAmount, oddOrEvenMult);
+                    tryAgain();
+
                 } else {
+                    printLoser();
                     tryAgain();
                 }
 
@@ -150,7 +139,10 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
                 if (winBet(betBlackOrRed, winningNum.rouletteNum)) {
                     printWinner();
                     payOutCalc(betAmount, numberGuessMult);
+                    tryAgain();
+
                 } else {
+                    printLoser();
                     tryAgain();
                 }
 
@@ -158,7 +150,10 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
                 if (winBet(betHighOrLow, winningNum.rouletteNum)) {
                     printWinner();
                     payOutCalc(betAmount, numberGuessMult);
+                    tryAgain();
+
                 } else {
+                    printLoser();
                     tryAgain();
                 }
 
@@ -166,7 +161,10 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
                 if (winBet(betWhichDoz, winningNum.rouletteNum)) {
                     printWinner();
                     payOutCalc(betAmount, numberGuessMult);
+                    tryAgain();
+
                 } else {
+                    printLoser();
                     tryAgain();
                 }
 
@@ -174,7 +172,9 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
                 if (winBet(betWhichColumn, winningNum.rouletteNum)) {
                     printWinner();
                     payOutCalc(betAmount, numberGuessMult);
+                    tryAgain();
                 } else {
+                    printLoser();
                     tryAgain();
                 }
             }
@@ -183,17 +183,40 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
 
     }
 
-
-    public void showWinningCondition() {}
-
-    public void tryAgain() {
-        choice = roulettePlayer.promptPlayerFoMoney("You Lose   \n" +
-                "Try again? \n" +
-                "1. Yes     \n" +
-                "2. No        ");
-        if (choice == 1) {
-            run();
+    public void printWinningParam(RouletteNumParam winningNum) {
+        gameMaster.println("The Winning Number Is: \n"
+                + winningNum.rouletteNum + "\n");
+        if (winningNum.oddOrEven == 1) {
+            gameMaster.println("It Is an Odd Number");
+        } else if (winningNum.oddOrEven == 2) {
+            gameMaster.println("It Is an Even Number");
         }
+        if (winningNum.blackOrRed == 1) {
+            gameMaster.println("With The Color Black\n");
+        } else if (winningNum.blackOrRed == 2) {
+            gameMaster.println("With The Color Red\n");
+        }
+        if (winningNum.highOrLow == 1) {
+            gameMaster.println("As a High Number");
+        }else if (winningNum.highOrLow == 2) {
+            gameMaster.println("As a Low Number");
+        }
+        if (winningNum.whichDoz == 1) {
+            gameMaster.println("That lives in the 1st Dozen");
+        }else if (winningNum.whichDoz == 2) {
+            gameMaster.println("That lives in the 2nd Dozen");
+        }else if (winningNum.whichDoz == 3) {
+            gameMaster.println("That lives in the 3rd Dozen");
+        }
+        if (winningNum.whichColumn == 1) {
+            gameMaster.println("Part Of The 1st Column\n");
+        }else if (winningNum.whichColumn == 2) {
+            gameMaster.println("Part Of The 2nd Column\n");
+        }else if (winningNum.whichColumn == 3) {
+            gameMaster.println("Part Of The 3rd Column\n");
+        }
+
+
     }
 
     public void bettingOnNumber(){
@@ -203,23 +226,38 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
 
         RouletteTable rt = new RouletteTable();
         RouletteNumParam winningNum = rt.throwBall();
+        printWinningParam(winningNum);
 
         if (betRouletteNum > -1) {
             if (winBet(betRouletteNum, winningNum.rouletteNum)) {
                 printWinner();
                 payOutCalc(betAmount, numberGuessMult);
             } else {
-                int choice = roulettePlayer.promptPlayerFoMoney("You Lose   \n" +
-                        "Try again? \n" +
-                        "1. Yes     \n" +
-                        "2. No        ");
-                if (choice == 1) {
-                    run();
-                }
+                printLoser();
+                tryAgain();
             }
         }
-
     }
+
+    public void showWinningCondition() {}
+
+    public void printLoser() {
+        gameMaster.println("Ouch You Lose \n");
+    }
+
+    public void tryAgain() {
+        int again = roulettePlayer.promptPlayerFoMoney("Play Again? \n" +
+                                                    "1. Yes     \n" +
+                                                    "2. No        ");
+        if (again == 1) {
+            run();
+        } else if (again == 2) {
+            choice = 2;
+        }
+    }
+
+
+
 
     public String insideBetting() {
 
@@ -288,10 +326,6 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
     }
 
 
-
-
-
-
     public boolean winBet(int bet, int betParam) {
         return (bet == betParam);
     }
@@ -304,12 +338,19 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
 
     @Override
     public boolean isEndCondition() {
-        return true;
+        if(choice == 2) {
+            return true;
+        }
+        return false;
     }
-    public void endGame(){};
+    public void endGame(){
+
+    }
 
     @Override
     public int payOutCalc(int betAmount, int payOutMult) {
-        return betAmount + (betAmount * payOutMult);
+        int winnings = betAmount + (betAmount * payOutMult);
+        gameMaster.println(" Your Winnings Of: \n$" + winnings + "\nHas Been Transferred To Your Account ");
+        return winnings;
     }
 }
