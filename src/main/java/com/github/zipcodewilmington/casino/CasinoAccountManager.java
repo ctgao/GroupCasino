@@ -74,7 +74,7 @@ public class CasinoAccountManager {
     public void readAccounts() {
         Scanner fileIn = null;
         try {
-            fileIn = new Scanner(new File("/Users/osama/LocalProjects/GroupCasino/login.txt"));
+            fileIn = new Scanner(new File("/Users/christine/LocalProjects/Group Projects/GroupCasino/login.txt"));
         } catch (FileNotFoundException e) {
             Casino.errorMessage.println("File not found");
         }
@@ -95,7 +95,7 @@ public class CasinoAccountManager {
     public void saveAccounts() {
         try {
             // Create the file to write to
-            PrintWriter fileOut = new PrintWriter("/Users/osama/LocalProjects/GroupCasino/login.txt");
+            PrintWriter fileOut = new PrintWriter("/Users/christine/LocalProjects/Group Projects/GroupCasino/login.txt");
             // Write text just like we would to the console
             for (String i : getListOfAccounts().keySet()) {
                 CasinoAccount account = getListOfAccounts().get(i);
