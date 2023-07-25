@@ -183,40 +183,54 @@ public class RouletteGame implements GameInterface, GambleGameInterface {
 
     }
 
-    public void printWinningParam(RouletteNumParam winningNum) {
+    public String printWinningParam(RouletteNumParam winningNum) {
+        StringBuilder winner = new StringBuilder();
+
         gameMaster.println("The Winning Number Is: \n"
                 + winningNum.rouletteNum + "\n");
         if (winningNum.oddOrEven == 1) {
             gameMaster.println("It Is an Odd Number");
+            winner.append("odd ");
         } else if (winningNum.oddOrEven == 2) {
             gameMaster.println("It Is an Even Number");
+            winner.append("even ");
         }
         if (winningNum.blackOrRed == 1) {
             gameMaster.println("With The Color Black\n");
+            winner.append("black ");
         } else if (winningNum.blackOrRed == 2) {
             gameMaster.println("With The Color Red\n");
+            winner.append("red ");
         }
         if (winningNum.highOrLow == 1) {
             gameMaster.println("As a High Number");
+            winner.append("high ");
         }else if (winningNum.highOrLow == 2) {
             gameMaster.println("As a Low Number");
+            winner.append("low ");
         }
         if (winningNum.whichDoz == 1) {
             gameMaster.println("That lives in the 1st Dozen");
+            winner.append("1doz ");
         }else if (winningNum.whichDoz == 2) {
             gameMaster.println("That lives in the 2nd Dozen");
+            winner.append("2oz ");
         }else if (winningNum.whichDoz == 3) {
             gameMaster.println("That lives in the 3rd Dozen");
+            winner.append("3doz ");
         }
         if (winningNum.whichColumn == 1) {
             gameMaster.println("Part Of The 1st Column\n");
+            winner.append("1col ");
         }else if (winningNum.whichColumn == 2) {
             gameMaster.println("Part Of The 2nd Column\n");
+            winner.append("2col ");
         }else if (winningNum.whichColumn == 3) {
             gameMaster.println("Part Of The 3rd Column\n");
+            winner.append("3col");
         }
 
-
+        return winner.toString();
     }
 
     public void bettingOnNumber(){

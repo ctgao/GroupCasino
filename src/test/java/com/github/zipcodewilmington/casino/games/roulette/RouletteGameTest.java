@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class RouletteGameTest {
 
     @Test
-    void winBetTest() {
+    public void winBetTest() {
         //Given
         RouletteNumParam one = RouletteNumParam.one;
         String expectedBetType = "highOrLow";
@@ -29,7 +29,7 @@ class RouletteGameTest {
     }
 
     @Test
-    void winBetTest2() {
+    public void winBetTest2() {
         //Given
         int playerBet = 3;
 
@@ -47,7 +47,7 @@ class RouletteGameTest {
 
     }
     @Test
-    void winBetTest3() {
+    public void winBetTest3() {
         //Given
         RouletteGame rg = new RouletteGame();
 
@@ -66,7 +66,7 @@ class RouletteGameTest {
     }
 
     @Test
-    void runTest() {
+    public void runTest() {
         //Given
         RouletteTable rt = new RouletteTable();
         RouletteGame rg = new RouletteGame();
@@ -84,5 +84,45 @@ class RouletteGameTest {
 
     }
 
+    @Test
+    public void printWinningParamTest() {
+        //Given
+        RouletteGame game = new RouletteGame();
+
+        //When
+        String expctedString = "odd red high 1doz 1col ";
+        String actualString = game.printWinningParam(RouletteNumParam.one);
+
+        //Then
+        Assert.assertEquals(expctedString, actualString);
+    }
+
+    @Test
+    public void printWinningParamTest2() {
+        //Given
+        RouletteGame game = new RouletteGame();
+
+        //When
+        String expctedString2 = "even red high 1doz 3col";
+        String actualString2 = game.printWinningParam(RouletteNumParam.twelve);
+
+        //Then
+        Assert.assertEquals(expctedString2, actualString2);
+    }
+
+    @Test
+    public void printWinningParamTest3() {
+        //Given
+        RouletteGame game = new RouletteGame();
+
+        //When
+        String expctedString3 = "odd black low 3doz 2col ";
+        String actualString3 = game.printWinningParam(RouletteNumParam.thirty_five);
+
+        //Then
+        Assert.assertEquals(expctedString3, actualString3);
+    }
+
+    }
 
 }

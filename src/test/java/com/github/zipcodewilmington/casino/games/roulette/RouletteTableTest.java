@@ -23,13 +23,13 @@ class RouletteTableTest {
     }
 
     @Test
-    void enumCorrelationTest() {
+    void enumCorrelationTest1() {
 
         //Given
         int one = RouletteNumParam.one.highOrLow;
 
         //When
-        int expectedVal = 2;
+        int expectedVal = 1;
         int actualVal = one;
 
         //Then
@@ -37,5 +37,35 @@ class RouletteTableTest {
         Assert.assertEquals(expectedVal, actualVal);
 
     }
+    @Test
+    void enumCorrelationTest2() {
+
+        //Given
+        int twentyOne = RouletteNumParam.twenty_one.rouletteNum;
+
+        //When
+        int expectedNum = 21;
+        int actualNum = twentyOne;
+
+        //Then
+
+        Assert.assertEquals(expectedNum, actualNum);
+
+    }
+    @Test
+    void enumCorrelationTest3() {
+
+        //Given
+        int thirteen = RouletteNumParam.thirteen.blackOrRed;
+
+        //When
+        int expectedBlackOrRed = 1;
+        int actualBlackOrRed = thirteen;
+
+        //Then
+        Assert.assertEquals(expectedBlackOrRed, actualBlackOrRed);
+
+    }
+
 
 }
