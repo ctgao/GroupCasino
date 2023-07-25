@@ -85,7 +85,7 @@ class RouletteGameTest {
     }
 
     @Test
-    public void printWinningParamTest() {
+    public void printWinningParamTest1() {
         //Given
         RouletteGame game = new RouletteGame();
 
@@ -123,6 +123,19 @@ class RouletteGameTest {
         Assert.assertEquals(expctedString3, actualString3);
     }
 
+    @Test
+    public void printWinningParamZeroTest() {
+        //Given
+        RouletteGame game = new RouletteGame();
+
+        //When
+        String expctedZeroString = "";
+        String actualZeroString = game.printWinningParam(RouletteNumParam.zero);
+
+        //Then
+        Assert.assertEquals(expctedZeroString, actualZeroString);
+
     }
 
-}
+    }
+
