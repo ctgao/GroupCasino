@@ -32,8 +32,7 @@ public class SlotsPlayer extends PlayerClass implements GamblerInterface {
         }
         return false;
     }
-    public void displayPlayerInfo() {
-        System.out.println("Current ballance is " + getWallet());
+    public void displayPlayerInfo() {printToConsole("Current balance is " + getWallet());
     }
 
     @Override
@@ -46,10 +45,10 @@ public class SlotsPlayer extends PlayerClass implements GamblerInterface {
 
 
     @Override
-    public <SomeReturnType> String play() {
+    public <SomeReturnType> SomeReturnType play() {
         String choice = promptPlayerForChoice("Would you like to start the GAME ?");
         if(choice.toUpperCase().equals("YES")) {
-            return choice.toUpperCase();
+            return (SomeReturnType) choice.toUpperCase();
         }
         throw new RuntimeException("TRY AGAIN");
 

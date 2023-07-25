@@ -4,8 +4,6 @@ import com.github.zipcodewilmington.casino.CardGame;
 import com.github.zipcodewilmington.casino.CardPlayer;
 import com.github.zipcodewilmington.casino.cardutils.PlayingCard;
 import com.github.zipcodewilmington.casino.cardutils.PlayingCardSuit;
-import com.github.zipcodewilmington.casino.games.blackjack.BlackJackPlayer;
-import com.github.zipcodewilmington.casino.games.blackjack.DealerPlayer;
 import com.github.zipcodewilmington.utils.AnsiColor;
 import com.github.zipcodewilmington.utils.IOConsole;
 
@@ -216,7 +214,7 @@ public class SpadesGame extends CardGame {
         for(CardPlayer cp : super.getPlayers()) {
             SpadesPlayer player = (SpadesPlayer) cp;
             if(player.isHumanPlayer()) {
-                return player.promptPlayerToPlayAgain("Wanna play again?");
+                return player.promptPlayerForYesOrNo("Wanna play again?");
             }
         }
         return false;

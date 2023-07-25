@@ -59,7 +59,7 @@ public class BlackJackGame extends CardGame implements GambleGameInterface {
         for(CardPlayer cp : super.getPlayers()) {
             if(!(cp instanceof DealerPlayer)) {
                 BlackJackPlayer player = (BlackJackPlayer) cp;
-                return player.promptPlayerToPlayAgain("Wanna try your luck once more? (yes/no)");
+                return player.promptPlayerForYesOrNo("Wanna try your luck once more? (yes/no)");
             }
         }
         return false;

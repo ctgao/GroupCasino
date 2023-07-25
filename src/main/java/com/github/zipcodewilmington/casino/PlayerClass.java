@@ -1,9 +1,6 @@
 package com.github.zipcodewilmington.casino;
 
 import com.github.zipcodewilmington.Casino;
-import com.github.zipcodewilmington.casino.games.blackjack.BlackJackPlayer;
-import com.github.zipcodewilmington.casino.games.blackjack.DealerPlayer;
-import com.github.zipcodewilmington.utils.AnsiColor;
 import com.github.zipcodewilmington.utils.IOConsole;
 
 public abstract class PlayerClass implements PlayerInterface {
@@ -74,7 +71,7 @@ public abstract class PlayerClass implements PlayerInterface {
         return playerWantToSpend;
     }
 
-    public boolean promptPlayerToPlayAgain(String prompt) {
+    public boolean promptPlayerForYesOrNo(String prompt) {
         do {
             String choice = promptPlayerForChoice(prompt);
             if (choice.toUpperCase().contains("Y")) {
