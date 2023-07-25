@@ -15,10 +15,10 @@ class RouletteTableTest {
         Random random = new Random();
 
         //When
-        int expectedNum = random.nextInt(36) +1;
+        int expectedNum = random.nextInt(37);
 
         //Then
-        Assert.assertTrue(expectedNum >= 1 && expectedNum <= 36);
+        Assert.assertTrue(expectedNum >= 0 && expectedNum <= 36);
 
     }
 

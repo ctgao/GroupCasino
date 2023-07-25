@@ -8,8 +8,12 @@ import com.github.zipcodewilmington.casino.games.blackjack.BlackJackGame;
 import com.github.zipcodewilmington.casino.games.blackjack.BlackJackPlayer;
 import com.github.zipcodewilmington.casino.games.numberguess.NumberGuessGame;
 import com.github.zipcodewilmington.casino.games.numberguess.NumberGuessPlayer;
+import com.github.zipcodewilmington.casino.games.roulette.RouletteGame;
+import com.github.zipcodewilmington.casino.games.roulette.RoulettePlayer;
 import com.github.zipcodewilmington.casino.games.slots.SlotsGame;
 import com.github.zipcodewilmington.casino.games.slots.SlotsPlayer;
+import com.github.zipcodewilmington.casino.games.spades.SpadesGame;
+import com.github.zipcodewilmington.casino.games.spades.SpadesPlayer;
 import com.github.zipcodewilmington.utils.AnsiColor;
 import com.github.zipcodewilmington.utils.IOConsole;
 
@@ -18,6 +22,7 @@ import com.github.zipcodewilmington.utils.IOConsole;
  */
 public class Casino implements Runnable {
     private final IOConsole console = new IOConsole(AnsiColor.BLUE);
+    public static final IOConsole errorMessage = new IOConsole(AnsiColor.YELLOW);
 
     @Override
     public void run() {
@@ -37,8 +42,12 @@ public class Casino implements Runnable {
                     } else if (gameSelectionInput.equals("NUMBERGUESS")) {
                         play(new NumberGuessGame(), new NumberGuessPlayer(casinoAccount, console));
                     } else if (gameSelectionInput.equals("BLACKJACK")) {
-                            play(new BlackJackGame(console), new BlackJackPlayer(casinoAccount, console));
-                    } else {
+                        play(new BlackJackGame(), new BlackJackPlayer(casinoAccount, console));
+                    }else if (gameSelectionInput.equals("SPADES")) {
+                        play(new SpadesGame(), new SpadesPlayer(casinoAccount, console));
+                    } else if (gameSelectionInput.equals("ROULETTE")) {
+                        play(new RouletteGame(), new RoulettePlayer(casinoAccount, console));
+                    }else {
                         // TODO - implement better exception handling
                         String errorMessage = "[ %s ] is an invalid game selection";
                         throw new RuntimeException(String.format(errorMessage, gameSelectionInput));
@@ -52,25 +61,29 @@ public class Casino implements Runnable {
                 console.println("Welcome to the account-creation screen.");
                 String accountName = console.getStringInput("Enter your account name:");
                 String accountPassword = console.getStringInput("Enter your account password:");
+                if(casinoAccountManager.getAccount(accountName, accountPassword) != null){
+                    errorMessage.println("This account already exists!");
+                }
                 CasinoAccount newAccount = casinoAccountManager.createAccount(accountName, accountPassword);
                 casinoAccountManager.registerAccount(newAccount);
             }
+//            clearScreen();
         } while (!"logout".equals(arcadeDashBoardInput));
     }
 
     private String getArcadeDashboardInput() {
         return console.getStringInput(new StringBuilder()
-                .append("Welcome to the Arcade Dashboard!")
+                .append("\nWelcome to the Casino Dashboard!")
                 .append("\nFrom here, you can select any of the following options:")
-                .append("\n\t[ create-account ], [ select-game ]")
+                .append("\n\t[ create-account ], [ select-game ], [ logout ]")
                 .toString());
     }
 
     private String getGameSelectionInput() {
         return console.getStringInput(new StringBuilder()
-                .append("Welcome to the Game Selection Dashboard!")
+                .append("\nWelcome to the Game Selection Dashboard!")
                 .append("\nFrom here, you can select any of the following options:")
-                .append("\n\t[ SLOTS ], [ NUMBERGUESS ], [ BLACKJACK ]")
+                .append("\n\t[ SLOTS ], [ NUMBERGUESS ], [ BLACKJACK ], [ SPADES ], [ ROULETTE ]")
                 .toString());
     }
 
@@ -79,5 +92,19 @@ public class Casino implements Runnable {
         PlayerInterface player = (PlayerInterface)playerObject;
         game.add(player);
         game.run();
+    }
+
+    // created this function so i can clear the screen in between different game playthroughs
+    // right now this doesn't work for shit
+    public void clearScreen(){
+        // this first part is an ANSI ESCAPE CODE
+        // it will clear the screen of text
+        console.print("\033[H\033[2J");
+    }
+
+    // created this function for printing mean errors to the user
+    public static void invalidGambler(){
+        errorMessage.println("No money? No gambling for you!");
+        System.exit(0);
     }
 }

@@ -11,7 +11,7 @@ class DealerPlayerTest {
     @Test
     void inheritanceTest(){
         //Given
-        BlackJackPlayer dealer = new DealerPlayer(null);
+        BlackJackPlayer dealer = new DealerPlayer();
         //When
         //Then
         assertEquals(true, dealer instanceof DealerPlayer);
@@ -20,7 +20,7 @@ class DealerPlayerTest {
     @Test
     void isShowFirstCardTest() {
         //Given
-        DealerPlayer dealer = new DealerPlayer(null);
+        DealerPlayer dealer = new DealerPlayer();
         //When
         boolean actual = dealer.isShowFirstCard();
         //Then
@@ -29,7 +29,7 @@ class DealerPlayerTest {
     @Test
     void isShowFirstCardTest1() {
         //Given
-        DealerPlayer dealer = new DealerPlayer(null);
+        DealerPlayer dealer = new DealerPlayer();
         dealer.setShowFirstCard(true);
         //When
         boolean actual = dealer.isShowFirstCard();
@@ -41,7 +41,7 @@ class DealerPlayerTest {
     void playTest() {
         //Given
         String expected = "HIT";
-        BlackJackPlayer dealer = new DealerPlayer(null);
+        BlackJackPlayer dealer = new DealerPlayer();
         // the dealer has a current hand of 11 + 2
         dealer.receiveCard(new PlayingCard(PlayingCardSuit.DIAMONDS, PlayingCardValue.ACE));
         dealer.receiveCard(new PlayingCard(PlayingCardSuit.DIAMONDS, PlayingCardValue.TWO));
@@ -54,7 +54,7 @@ class DealerPlayerTest {
     void playTest1() {
         //Given
         String expected = "STAY";
-        BlackJackPlayer dealer = new DealerPlayer(null);
+        BlackJackPlayer dealer = new DealerPlayer();
         // the dealer has a current hand of 11 + 6
         dealer.receiveCard(new PlayingCard(PlayingCardSuit.DIAMONDS, PlayingCardValue.ACE));
         dealer.receiveCard(new PlayingCard(PlayingCardSuit.DIAMONDS, PlayingCardValue.SIX));
@@ -67,8 +67,8 @@ class DealerPlayerTest {
     @Test
     void toStringTest() {
         //Given
-        String expected = "\nDealer Hand: [HIDDEN, 6 of Diamonds]";
-        BlackJackPlayer dealer = new DealerPlayer(null);
+        String expected = "\nDealer's Hand: [HIDDEN, 6 ♦]";
+        BlackJackPlayer dealer = new DealerPlayer();
         dealer.receiveCard(new PlayingCard(PlayingCardSuit.DIAMONDS, PlayingCardValue.ACE));
         dealer.receiveCard(new PlayingCard(PlayingCardSuit.DIAMONDS, PlayingCardValue.SIX));
         //When

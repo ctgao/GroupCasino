@@ -29,8 +29,9 @@ public class CasinoAccountManager {
                 return listOfAccounts.get(accountName);
             }
         }
-        String errorMessage = "There is no account with this name and password!";
-        throw new RuntimeException(errorMessage);
+        return null;
+//        String errorMessage = "There is no account with this name and password!";
+//        throw new RuntimeException(errorMessage);
     }
 
     /**

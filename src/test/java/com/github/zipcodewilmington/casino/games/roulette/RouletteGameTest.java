@@ -1,5 +1,6 @@
 package com.github.zipcodewilmington.casino.games.roulette;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,7 @@ class RouletteGameTest {
         String expectedBetType = "highOrLow";
 
         //When
-        int expectedValue = 2;
+        int expectedValue = 1;
         int actualValue = 0;
 
         switch(expectedBetType) {
@@ -45,6 +46,24 @@ class RouletteGameTest {
         Assert.assertEquals(expectedBetParam, actualBetParam);
 
     }
+    @Test
+    void winBetTest3() {
+        //Given
+        RouletteGame rg = new RouletteGame();
+
+
+        //When
+        int expectedValue1 = 1;
+        int actualValue1 = RouletteNumParam.one.rouletteNum;
+
+        int expectedColumnValue = 1;
+        int actualColumnValue = RouletteNumParam.one.whichColumn;
+
+        //Then
+        Assert.assertTrue(rg.winBet(expectedValue1, actualValue1));
+        Assert.assertTrue(rg.winBet(expectedColumnValue, actualColumnValue));
+
+    }
 
     @Test
     void runTest() {
@@ -64,4 +83,6 @@ class RouletteGameTest {
 
 
     }
+
+
 }
