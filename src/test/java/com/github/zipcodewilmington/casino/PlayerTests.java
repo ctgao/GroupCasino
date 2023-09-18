@@ -1,8 +1,8 @@
-//package com.github.zipcodewilmington.casino;
-//
-//import org.junit.Assert;
-//import org.junit.Test;
-//
+package com.github.zipcodewilmington.casino;
+
+import org.junit.Assert;
+import org.junit.Test;
+
 //public class PlayerTests {
 //
 //    @Test

@@ -8,39 +8,42 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.github.zipcodewilmington.casino.HouseAccount;
 
 class HouseAccountTest {
-
     @Test
+    void testAll(){
+        getBalance();
+        acceptMoney();
+        payout();
+    }
+
     void getBalance() {
         //Given
-        HouseAccount houseAccount = new HouseAccount(32);
+        HouseAccount houseAccount = HouseAccount.getHouseAccount();
         //When
         int expected = houseAccount.getBalance();
-        int actual = 32;
+        int actual = 1_000_000;
 
         //Then
         Assert.assertEquals(expected, actual);
     }
 
-    @Test
     void payout() {
         //Given
-        HouseAccount houseAccount = new HouseAccount(32);
+        HouseAccount houseAccount = HouseAccount.getHouseAccount();
         houseAccount.payout(30);
         //When
         int expected = houseAccount.getBalance();
-        int actual = 2;
+        int actual = 1_000_000 + 40 - 30;
         //Then
         Assert.assertEquals(expected, actual);
     }
 
-    @Test
     void acceptMoney() {
         //Given
-        HouseAccount houseAccount = new HouseAccount(32);
+        HouseAccount houseAccount = HouseAccount.getHouseAccount();
         houseAccount.acceptMoney(40);
         //When
         int expected = houseAccount.getBalance();
-        int actual = 72;
+        int actual = 1_000_000 + 40;
 
         //Then
         Assert.assertEquals(expected, actual);

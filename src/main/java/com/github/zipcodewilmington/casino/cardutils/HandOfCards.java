@@ -1,5 +1,8 @@
 package com.github.zipcodewilmington.casino.cardutils;
 
+import com.github.zipcodewilmington.utils.AnsiColor;
+import com.github.zipcodewilmington.utils.IOConsole;
+
 import java.util.ArrayList;
 
 public class HandOfCards extends ArrayList<PlayingCard> {

@@ -7,13 +7,16 @@ package com.github.zipcodewilmington.utils;
 public enum AnsiColor {
     AUTO("\u001B[0m"),
     BLACK("\u001B[30m"),
-    RED("\u001B[31m"),
+    RED("\u001B[91m"),
     GREEN("\u001B[32m"),
-    YELLOW("\u001B[33m"),
-    BLUE("\u001B[34m"),
+    YELLOW("\u001B[93m"),
+    DULL_CYAN("\u001B[36m"),
+    BLUE("\u001B[94m"),
     PURPLE("\u001B[35m"),
-    CYAN("\u001B[36m"),
-    WHITE("\u001B[37m");
+    CYAN("\u001B[96m"),
+    WHITE("\u001B[37m"),    // this actually looks like gray - not sure why - a dull white?
+    MAGENTA("\u001B[95m"),
+    WHITE_BACKGROUND("\u001B[107m");
 
     private final String color;
 

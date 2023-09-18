@@ -8,12 +8,13 @@ package com.github.zipcodewilmington.casino;
 public class CasinoAccount {
 
     private String accOwner;
+    private String accPassword;
     private int accBalance;
 
-    public CasinoAccount(String accOwner, int accBalance){
+    public CasinoAccount(String accOwner, String accPassword, int accBalance){
         this.accOwner = accOwner;
+        this.accPassword = accPassword;
         this.accBalance = accBalance;
-
     }
 
     public int getAccBalance() {return this.accBalance;}
@@ -26,5 +27,9 @@ public class CasinoAccount {
 
     public void updateAccBalance(int winnings) {
         this.accBalance = this.accBalance + winnings;
+    }
+
+    public String getAccPassword() {
+        return accPassword;
     }
 }

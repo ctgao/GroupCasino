@@ -5,17 +5,15 @@ public class HouseAccount {
     private static HouseAccount houseAccount;
     private int accBalance;
 
-    HouseAccount() {}
+    private HouseAccount() {
+        accBalance = 1_000_000;
+    }
 
-    private static synchronized HouseAccount getHouseAccount()  {
+    public static synchronized HouseAccount getHouseAccount()  {
         if (houseAccount == null) {
             houseAccount = new HouseAccount();
         }
         return houseAccount;
-    }
-
-    HouseAccount(int accBalance) {
-        this.accBalance = accBalance;
     }
 
     public int getBalance() {

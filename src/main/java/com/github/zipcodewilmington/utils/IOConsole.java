@@ -1,5 +1,7 @@
 package com.github.zipcodewilmington.utils;
 
+import com.github.zipcodewilmington.Casino;
+
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
@@ -47,8 +49,8 @@ public class IOConsole {
             Double doubleInput = Double.parseDouble(stringInput);
             return doubleInput;
         } catch (NumberFormatException nfe) {
-            println("[ %s ] is an invalid user input!", stringInput);
-            println("Try inputting a numeric value!");
+            Casino.errorMessage.println("[ %s ] is an invalid user input!", stringInput);
+            Casino.errorMessage.println("Try inputting a numeric value!");
             return getDoubleInput(prompt, args);
         }
     }
@@ -59,8 +61,8 @@ public class IOConsole {
             Long longInput = Long.parseLong(stringInput);
             return longInput;
         } catch (NumberFormatException nfe) {
-            println("[ %s ] is an invalid user input!", stringInput);
-            println("Try inputting an integer value!");
+            Casino.errorMessage.println("[ %s ] is an invalid user input!", stringInput);
+            Casino.errorMessage.println("Try inputting an integer value!");
             return getLongInput(prompt, args);
         }
     }
